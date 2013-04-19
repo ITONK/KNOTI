@@ -13,12 +13,87 @@
 
 %Standard sti at søge efter billeder
 \usepackage{graphicx}
+\usepackage{float}
 \graphicspath{{Figurer/}}
 
 %Speciel skrift for enkelt linje kode
 %Udskriver med fonten 'Courier'
 %Mere info her: http://tex.stackexchange.com/questions/25249/how-do-i-use-a-particular-font-for-a-small-section-of-text-in-my-document
 \newcommand{\code}[1]{{\fontfamily{pcr}\selectfont #1}}
+
+%FixMe pakken viser små kommentarer, hvor der skal rettes
+%Brug med følgende: \fxnote{det her skal uddybes!}
+%Se liste over alle sixMe's: \listoffixmes
+\usepackage[footnote,draft,danish,silent,nomargin]{fixme}
+
+%----------------------------------------------------------
+% Følgende er til koder.
+% Indsættes mellem \begin{lstlisting} og \end{lstlisting}
+% Se eksempel under pakken
+%----------------------------------------------------------
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\renewcommand{\lstlistingname}{Code snippet}
+\lstdefinestyle{Code}
+{
+	title 			= Code snippet,
+	keywordstyle	= \bfseries\ttfamily\color[rgb]{0,0,1},
+	identifierstyle	= \ttfamily,
+	commentstyle	= \color[rgb]{0.133,0.545,0.133},
+	stringstyle		= \ttfamily\color[rgb]{0.627,0.126,0.941},
+	showstringspaces= false,
+	basicstyle		= \small,
+	numberstyle		= \footnotesize,
+%	numbers			= left, % Tal? Udkommenter hvis ikke
+	stepnumber		= 2,
+	numbersep		= 6pt,
+	tabsize			= 2,
+	breaklines		= true,
+	prebreak 		= \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	breakatwhitespace= false,
+%	aboveskip		= {1.5\baselineskip},
+  	columns			= fixed,
+  	upquote			= true,
+  	extendedchars	= true,
+ 	backgroundcolor = \color{lbcolor},
+	lineskip		= 1pt,
+%	xleftmargin		= 17pt,
+%	framexleftmargin= 17pt,
+	framexrightmargin	= 0pt, %6pt
+%	framexbottommargin	= 4pt,
+}
+
+
+%Custom length for caption over lstlisting
+%The caption must be 6 pt shorter
+\usepackage{calc}
+\newlength{\mywidth}
+\setlength{\mywidth}{\textwidth-6pt}
+
+
+% Customized style for the caption
+\usepackage{caption}
+\DeclareCaptionFont{white}{\color{white}}
+\DeclareCaptionFormat{listing}%
+{\colorbox[cmyk]{0.43, 0.35, 0.35,0.35}{\parbox{\mywidth}{\hspace{5pt}#1#2#3}}}
+\captionsetup[lstlisting]
+{
+	format			= listing,
+	labelfont		= white,
+	textfont		= white, 
+	singlelinecheck	= false, 
+	width			= \mywidth,
+	margin			= 0pt, 
+	font			= {bf,footnotesize}
+}
+
+\lstdefinestyle{Code-C} {language=C, style=Code}
+\lstdefinestyle{Code-C++} {language=[Visual]C++, style=Code}
+\lstdefinestyle{Code-VHDL} {language=VHDL, style=Code}
+\lstdefinestyle{Code-Bash} {language=Bash, style=Code}
 
 %Text typesetting
 %--------------------------------------------------------
@@ -53,17 +128,16 @@
 
 \begin{titlepage}
 \begin{center}
-{\LARGE \textbf{[Project title]}}\\
-{\large \textbf{Domain Name System\\ OR\\ Data Distribution Service\\ OR\\ Java Remote Method Invocation}}\\
+{\LARGE \textbf{Domain Name System}}
 
 
 \vspace{4cm}
-\textbf{Handed in [April 20], [2013], by team no. [1]}\\~\\
+\textbf{Handed in April 25, 2013, by Team 2}\\~\\
 \begin{tabular}{ll}
-$[$Rasmus Bækgaard$]$  & $[$10893@iha.dk$]$ \\
-$[$Anders Kielsholm$]$  & $[$10749@iha.dk$]$ \\
-$[$Lasse Hansen$]$  & $[$10063@iha.dk$]$ \\
-$[$Mia Leth Sørensen$]$  & $[$10959@iha.dk$]$ \\
+Rasmus Bækgaard  & 10893@iha.dk \\
+Anders Kielsholm  & 10749@iha.dk \\
+Lasse Hansen  & 10063@iha.dk \\
+Mia Leth Sørensen & 0959@iha.dk \\
 \end{tabular}
 \vfill
 \textbf{Electrical and Computer Engineering}\\
@@ -83,17 +157,21 @@ $[$Mia Leth Sørensen$]$  & $[$10959@iha.dk$]$ \\
 \subfile{Conclusion}
 
 
-\begin{thebibliography}{9}
-\addcontentsline{toc}{chapter}{Bibliography}
+%\begin{thebibliography}{9}
+%\addcontentsline{toc}{chapter}{Bibliography}
+%
+%\bibitem{1989_graham_1}
+%R.L. Graham, D.E. Knuth, and O. Patashnik, \emph{Concrete
+%mathematics}, Addison-Wesley, Reading, MA, 1989.
+%
+%\bibitem{2003_simpson_1} H. Simpson, \emph{Proof of the Riemann
+%Hypothesis},  preprint (2003), available at 
+%\url{http://www.math.drofnats.edu/riemann.ps}.
 
-\bibitem{1989_graham_1}
-R.L. Graham, D.E. Knuth, and O. Patashnik, \emph{Concrete
-mathematics}, Addison-Wesley, Reading, MA, 1989.
+%\nocite{*}
+\bibliographystyle{ieeetr}
+\bibliography{references}
 
-\bibitem{2003_simpson_1} H. Simpson, \emph{Proof of the Riemann
-Hypothesis},  preprint (2003), available at 
-\url{http://www.math.drofnats.edu/riemann.ps}.
-
-\end{thebibliography}
+%\end{thebibliography}
 
 \end{document}

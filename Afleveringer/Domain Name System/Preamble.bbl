@@ -1,0 +1,21 @@
+\begin{thebibliography}{1}
+
+\bibitem{wiki-hosts}
+Wikipedia, ``Hosts (file),'' April 2013.
+\newblock Accessed 19-04-13, URL: http://en.wikipedia.org/wiki/Hosts\_(file).
+
+\bibitem{wiki-dns}
+Wikipedia, ``Domain name system,'' April 2013.
+\newblock Accessed 19-04-13, URL:
+  http://en.wikipedia.org/wiki/Domain\_Name\_System.
+
+\bibitem{Tanenbaum}
+A.~S.~Tanenbaum and M.~Van~Steen, ``Distributed systems principles and
+  paradigms,'' {\em Network}, vol.~4, p.~20, 2004.
+
+\bibitem{wiki-fqdn}
+Wikipedia, ``Fully qualified domain name,'' April 2013.
+\newblock Accessed 19-04-13, URL:
+  http://en.wikipedia.org/wiki/Fully\_qualified\_domain\_name.
+
+\end{thebibliography}
