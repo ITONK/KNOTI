@@ -1,0 +1,8 @@
+Two main security threats exist for
+DNS in the context of query/
+response transactions. Attackers can
+• spoof authoritative name servers
+responding to DNS queries and
+alter DNS responses, and
+• alter the DNS responses stored in
+caching name servers. Therefore DNSSEC was designed to protect the users from obtaining corrupted DNS data. It contains a set of extensions to DNS which provide origin authentication of DNS data, authenticated denial of existence, and data integrity.
