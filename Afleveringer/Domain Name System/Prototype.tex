@@ -1,49 +1,32 @@
 \documentclass[Preamble]{subfiles}
 \begin{document}
 
-\chapter{Prototype: Title of your prototype}
+\chapter{Prototype: School DNS}
+A school want to use a DNS server to filter certain internet sites from students and also have the opportunity to get a faster response from the name server. 
 
-Approximately 2-5 pages in-depth description of prototyping with the
-technology under consideration. That is, you analyze, design,
-implement, and test
-\begin{itemize}
-\item a very limited, but functional prototype that utilizes the
-  technology under consideration.
-\end{itemize}
+\section{Solution}
+To achieve the school's request, a BIND server could be set up. BIND is a open source implementation of the DNS protocols and is the most used DNS server software. One of the advantages with BIND, is that it supports both Windows, Mac and Linux. BIND acts like a caching server, where it stores answers to name queries and this results in reduced time of future queries to the same server.
 
-You define your own prototype and the context in which it should
-function; the list below is for your inspiration.
+ANDERS : LAV TEST MED DIG -X
 
-\begin{itemize}
-\item Domain Name System: A public school or a medium sized company
-  would like to host their own DNS and/or forward requests to OpenDNS.
-\item Data Distribution Service: A hospital or a production factory
-  would like to employ Connext DDS to distribute mission critical
-  data.
-\item Java Remote Method Invocation: A company is setting up
-  facilities, e.g. parcel or luggage sorters, abroad and would like to
-  be able to access back-end methods and data at home.
-\end{itemize}
+BIND can afterwards be configured in different ways to achieve a filter. One of the solutions is forwarding to a public DNS and another is local configuring.
 
-In your analysis you should at least address and/or include:
+\subsection{Forward to public DNS}
 
-\begin{itemize}
-\item Overall diagram and description of the prototype
-\item Relevance of the technology under consideration to your prototype
-\item How the technology is included in your prototype
-\item Definition of a small set of realistic use-cases and related
-  functional requirements
-\end{itemize}
+LASSE : TEST MED PUBLIC DNS - UDGANGSPUNKT I BILLEDE + Målinger
 
-The design, implementation, and test should at least address and/or include:
+One solution to the school case is to forward all their requests to a public DNS, e.g. OpenDNS. This would be a simple solution, that for some servers would give a faster response. Furthermore some servers are filtering sites that can harm your computer, and thereby make it safer to use the network.
 
-\begin{itemize}
-\item Diagrams, e.g. UML, supplemented with code snippets of most important parts
-\item Test and evaluation of your system: Does it work as intended?
-\item Evaluation of the prototype and the technology employment as a
-  whole
-\end{itemize}
+There is a lot of public DNS servers, but not all will make the respond time faster. To find  an optimal solution, Google's Test Bench (GTB) have been used. In this case GTB looked up around 4500 servers and tested them all to find the fastest server in average.
 
+After the tests the fastest server can be written into /etc/bind/named
 
+To verify the tests a comparison of three scenarios have been made: No forwarder, forwarder to
+
+\subsection{Local filtering}
+TODO - Skal skrives om hvordan man kan udbygge filtering ved localhost og spærre for decideret sider. 
+
+\section{Setup BIND Server}
+To install a BIND server on Linux type in "sudo apt-get install bind[9]". This will install version 9 of the BIND server software. To check if installation if succesfull type "named -v" and if it is successfull, it will show "BIND 9.8.1-P1". For testing purpose, "dnsutils" have been used - and this can be used to see Query time for the DNS lookup with the commannd "dig -x IP-Adress". 
 
 \end{document} 
