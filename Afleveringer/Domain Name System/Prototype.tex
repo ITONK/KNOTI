@@ -9,6 +9,9 @@ A school want to use a DNS server to filter certain internet sites from students
 To achieve the school's request, a BIND server could be set up. BIND is a open source implementation of the DNS protocols and is the most used DNS server software. One of the advantages with BIND, is that it supports both Windows, Mac and Linux. BIND acts like a caching server, where it stores answers to name queries and this results in reduced time of future queries to the same server.
 
 ANDERS : LAV TEST MED DIG -X
+- Hvis vi kører uden forwarder, skriver den altid localhost (127.0.0.1) ud. Første er LANGSOM (500-1000ms), anden er hurtigere (0-1ms).
+- Hvis vi har forwarder (uanset hvilken) rammer den første gang ISP (84.238.0.130), hvilket er "hurtig" (25,3,3,13,3ms) og derefer på localhost (igen 0-1ms).
+- På forward rammer vi første cache, men teoretisk set kunne vi bruge anden cache hvis adressen ikke ligger i første. Men public DNS kan bruges til rettelse (og badsites?).
 
 BIND can afterwards be configured in different ways to achieve a filter. One of the solutions is forwarding to a public DNS and another is local configuring.
 
