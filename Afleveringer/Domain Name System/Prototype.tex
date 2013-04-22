@@ -26,7 +26,7 @@ There is a lot of public DNS servers, but not all will make the respond time fas
 
 The test shows, that Cirque DK have the lowest mean response time with 18ms, and the systems localhost DNS have a mean response time on 36ms. One of the more popular public DNS is openDNS, which is a little faster than localhost with 29ms. To test if one of the public DNS is faster than localhost, a test have been made with 5 different internet sites and their given response time. 
 
-To test the given servers, the file located at /etc/bind/named have to be edited. There the given DNS servers adress is typed in, and the BIND server will forward to the given DNS, if the adress is not avaliable on the BIND server. (skal måske rykkes ned / vise figur her?)
+To test the given servers, the file located at /etc/bind/named have to be edited with the adress of the DNS server it shall forward to. 
 
 
 \begin{center}
@@ -70,8 +70,20 @@ To test the given servers, the file located at /etc/bind/named have to be edited
 
 The tabels show, that Cirquie.DK have a faster response time with 4 out of the 5 test sites than openDNS, which mean that the most optimal public DNS server from the test would be Cirquie.DK. 
 
+With this implementation and with BIND configured, the system can be shown in the following figure.
+
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.5]{../../Protoypes/DNS/ForwardingDiagram.jpg}
+\caption{System overview}
+\end{figure}
+
+
+The figures shows that it first try to see in the local BIND server, if the adress is avaliable (cached). If the adress isn't cached, the BIND server will forward to the chosen public DNS (e.g. Cirquie.DK) and if that is not possible, it uses the ISP DNS server to look up the given adress. 
+
 (skal vi sammenligne med localhost også eller?)
-Slut af med figur om hvordan den spørger??
+(fordele og ulemper eller skal der laves en konklusion?)
+
 
 \subsection{Local filtering}
 TODO - Skal skrives om hvordan man kan udbygge filtering ved localhost og spærre for decideret sider. 
