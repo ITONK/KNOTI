@@ -125,13 +125,19 @@ response transactions. Attackers can
 	\item alter the DNS responses stored in caching name servers.
 	\item[] \hspace{100mm}\cite[p. 84]{DNS-article}
 	\end{itemize} 
-DNSSEC was designed to protect the users from obtaining corrupted DNS data. It contains a set of extensions to DNS which provide origin authentication of DNS data, authenticated denial of existence, and data integrity.
+DNSSEC was designed to protect the users from obtaining corrupted DNS data. 
+It contains a set of extensions to DNS which provide origin authentication of DNS data, authenticated denial of existence, and data integrity.
+If a DNS server uses DNSSEC it is marked as a \textit{signed zone}.
 
 
-A signed zone is a DNS server zone which includes a digital signature for all content it returns. 
-It verifies that the underlying responses have a requested resource records, special resource records  that carry the digital signatures associated with the requested resources and it contains a DNSKey which include a  
+
+A signed zone is a DNS server zone which includes a digital signature for all content it returns.
+It verifies that the underlying responses have requested resource records, special resource records that carry the digital signatures associated with the requested resources and it contains a DNSKey which include a public key which can verify the signature.
 
 
-include digital signatures for resource records in their zone files served by DNSSEC-aware authoritative name servers. In response to DNS queries, DNSSEC-aware authoritative name servers return signed DNS responses to DNSSECaware caching name servers. A signed DNS response contains three sets of records:
+
+Using signed zones as authentication requires a DNSSEC-aware caching name server which start from a trusted public key stored within it self, a \textit{trust anchor}.
+This establish a chain of trusted DNS servers with DNSSEC implemented to the public key of the zone. 
+It is also possible to use a \textit{trust achor list} which contains a list over trusted anchors.
 
 \end{document} 
