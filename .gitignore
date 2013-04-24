@@ -37,6 +37,7 @@
 *.synctex.gz
 *.toc
 *.pdf
+*.bbl
 
 #Temporary folders
 [Bb]in
