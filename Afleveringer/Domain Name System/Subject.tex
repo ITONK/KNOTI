@@ -138,6 +138,26 @@ It verifies that the underlying responses have requested resource records, speci
 
 Using signed zones as authentication requires a DNSSEC-aware caching name server which start from a trusted public key stored within it self, a \textit{trust anchor}.
 This establish a chain of trusted DNS servers with DNSSEC implemented to the public key of the zone. 
-It is also possible to use a \textit{trust achor list} which contains a list over trusted anchors.
+It is also possible to use a \textit{trust anchor list} which contains a list over trusted anchors.
+
+
+
+
+
+\subsection{Censorship and misuse of DNS}
+
+
+In 1998 China started the Golden Shield Project because they feared inciting of internet users overthrowing the government, harm national unification, spread rumors e.g.\cite{GFW-avoid} and began, with various techniques, to block the Chinese from website and searches on the internet.
+\\
+One of the methods is by setting up \textit{wiretap} that listens to everything sent out from Chinese ISPs and DNS resolvers\cite{GFW} and send back a fake DNS reply -- a technique called \textit{DNS Injection}. 
+
+
+This is one example\footnote{Looking aside from other techniques the Golden Shield provide} where DNSSEC could prove valuable -- reassuring the client the correct IP-address.
+
+
+
+
+
+
 
 \end{document} 
