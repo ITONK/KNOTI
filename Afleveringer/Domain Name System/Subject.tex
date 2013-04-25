@@ -3,20 +3,14 @@
 
 \chapter{Domain Name System}
 
-
-Domain Name System, DNS, is used to find IP-addresses from a logical name using the concept of the Host Lookup Table.
-The Host Lookup Table, HLT, was a file placed on every computer connected to the network which contained the IP-address and the logical name for each computer connected\cite[History section]{wiki-hosts}.
-
-When the HLT was updated, all computers needed to add the address which, due to the expansion of connecting computers to the network, became an obstacle and hindrance for the flow.
-To solve this the DNS system was invented in 1982\cite[History section]{wiki-dns}.
-
-DNS is like a big telephone book which everyone uses to lookup IP-addresses from logical names, through an address record (A record)\cite[p. 210]{Tanenbaum}, rather than everyone keeping track of all connected addresses.
-
-
-
 \section{DNS fundamentals}
-To find the computer's host name the command \code{hostname} will show the logical human readable name for the computer. 
-The hostname will be shown on the list of connected computers on a  network.
+Domain Name System, DNS, is used to find IP-addresses from a logical name using the concept of the Host Lookup Table.
+The Host Lookup Table, HLT, was a file placed on every computer connected to the network which contained the IP-address and the logical name for each computer connected. When a computer on the network needs to communicate with another connected computer the HLT was used to map the human friendly - and easy to remember - logical name with the IP address \cite[History section]{wiki-hosts}.
+\\When a new computer joined the network the HLT was updated, and all the other computers on the network needed to add the logical name and associated IP address which, due to the expansion of connecting computers to the network, became an obstacle and hindrance for the flow. To solve this the DNS system was invented in 1982\cite[History section]{wiki-dns}.
+\\DNS, one of the largest distributed systems, is like a big telephone book which everyone uses to lookup IP-addresses from logical names, through an address record (A record)\cite[p. 209-210]{Tanenbaum}, rather than everyone keeping track of all connected addresses.
+\\
+\\
+To communicate with a computer (or device) on a network the hostname is used to identify the computer. To find the computer's hostname the command \code{hostname} will show the logical human readable name for the computer. 
 \\
 \\
 In Linux the command \code{nm-tool} will access the NetworkManager Tool and among others, show the IP-address, MAC-address, connection state and DNS-server for the computer.
@@ -52,8 +46,8 @@ This is shown on figure \ref{fig:ping}
 \end{figure}
 
 
-Before makeing a lookup at the DNS server the system will check local HLT file, located in  \textit{/etc/hosts}, to see if any redirects or A records are listed.
-Redirections are created by typing the static IP-address followed by the new logical name as shown in Code snippet \ref{lst:redirect}
+Before making a lookup at the DNS server the system will check local HLT file, located in  \textit{/etc/hosts}, to see if any redirects or A records are listed.
+Redirections are created by typing the static IP-address followed by the new logical name as shown in code snippet below.
 
 
 \begin{lstlisting}[caption={Hosts file redirection}, style=Code-Bash, label=lst:redirect]
@@ -116,40 +110,39 @@ Therefore the client is only involved when asking for and obtaining the IP-addre
 \section{DNS security extentions}\label{sec:DNS-security}
 Due to security issues various governments, research organizations and others have developed a specification and associated protocol called DNS Security extensions (DNSSEC) which protects DNS querty/response transactions \cite[p. 84]{DNS-article}.
 
-Two main security threats exist for DNS in the context of query/
-response transactions. Attackers can
+Two main security threats exist for DNS in the context of query/response transactions. Attackers can
 
 	\begin{itemize}%[ref=test]
-	\item spoof authoritative name servers responding to DNS queries and alter DNS responses
+	\item cheat domain name servers and respond to DNS queries and alter DNS responses
 
 	\item alter the DNS responses stored in caching name servers.
 	\item[] \hspace{100mm}\cite[p. 84]{DNS-article}
 	\end{itemize} 
 DNSSEC was designed to protect the users from obtaining corrupted DNS data. 
-It contains a set of extensions to DNS which provide origin authentication of DNS data, authenticated denial of existence, and data integrity.
-If a DNS server uses DNSSEC it is marked as a \textit{signed zone}.
+It contains a set of extensions to DNS which provide origin authentication of DNS data, authenticated denial of existence, and data integrity. An administrative entity in the domain name system that provides DNS services for a group of domains is called a \textit{zone}.
+If a DNS server uses DNSSEC it is marked as a \textit{signed zone} \cite{DNS-article}.
 
 
 
 A signed zone is a DNS server zone which includes a digital signature for all content it returns.
-It verifies that the underlying responses have requested resource records, special resource records that carry the digital signatures associated with the requested resources and it contains a DNSKey which include a public key which can verify the signature.
+It verifies that the underlying responses have requested resource records, special resource records that carry the digital signatures associated with the requested resources and it contains a DNSKey which include a public key which can verify the signature \cite{DNS-article}.
 
 
 
 Using signed zones as authentication requires a DNSSEC-aware caching name server which start from a trusted public key stored within it self, a \textit{trust anchor}.
 This establish a chain of trusted DNS servers with DNSSEC implemented to the public key of the zone. 
-It is also possible to use a \textit{trust anchor list} which contains a list over trusted anchors.
+It is also possible to use a \textit{trust anchor list} which contains a list over trusted anchors \cite{DNS-article}.
 
-
+Currently the boundaries of the secure DNS is at the caching name servers as there is no end-to-end security. It would be preferable if an application could decide weather the requested data was corrupted or not. To accommodate this it it recommended to develop standardized formats or APIs that enabled caching name servers to communicate the security status (information about the outcome of the signature verification) to for example web or mail servers. It could also be met if the web servers performed the signature verification although it could lead to lower performance when small networked devices are used \cite{DNS-article}.
 
 
 
 \subsection{Censorship and misuse of DNS}
 
 
-In 1998 China started the Golden Shield Project because they feared inciting of internet users overthrowing the government, harm national unification, spread rumors e.g.\cite{GFW-avoid} and began, with various techniques, to block the Chinese from website and searches on the internet.
+In 1998 China started the Golden Shield Project because they feared inciting of internet users overthrowing the government, harm national unification, spread rumours e.g.\cite{GFW-avoid} and began, with various techniques, to block the Chinese from websites and searches on the internet.
 \\
-One of the methods is by setting up \textit{wiretap} that listens to everything sent out from Chinese ISPs and DNS resolvers\cite{GFW} and send back a fake DNS reply -- a technique called \textit{DNS Injection}. 
+One of the methods used is by setting up \textit{wiretap} that listens to everything sent out from Chinese internet service providers (ISPs) and DNS resolvers and sending back a fake DNS reply -- a technique called \textit{DNS injection} \cite{GFW}. 
 
 
 This is one example\footnote{Looking aside from other techniques the Golden Shield provide} where DNSSEC could prove valuable -- reassuring the client the correct IP-address.

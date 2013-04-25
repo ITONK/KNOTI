@@ -8,14 +8,14 @@ A school want to use a DNS server to filter certain internet sites from students
 To achieve the school's request, a BIND server could be set up. 
 BIND is a open source implementation of the DNS protocol and is the most used DNS server software. 
 One of the advantages with BIND, is that it supports both Windows, Mac and Linux. 
-BIND acts like a caching server, where it stores answers to name queries and this results in reduced time of future queries to the same server.
+BIND acts like a caching server, where it stores answers to name queries which results in reduced response time of future queries to the same server.
 
-When a requested hostname needs to be looked up, the local cache is the first place to be checked. 
-If the hostname is not found there, the next DNS server is asked. 
+When a requested hostname needs to be looked up the local cache is the first place to be checked. 
+If the hostname is not found there a DNS server is asked. 
 This might be your ISP or even a server on a "higher" level. 
-It is also possible via BIND to forward your requests to a public DNS server, meaning it will be asked, if no other server before that (e.g. your ISP's DNS server) have the hostname in its cache. 
+It is also possible via BIND to forward your requests to a public DNS server, meaning it will be asked, if no other server before that (e.g. your ISPs DNS server) has the hostname in its cache. An overview of this system is showed in Figure 1.1:
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{../../Protoypes/DNS/ForwardingDiagram.jpg}
 \caption{System overview}
@@ -24,31 +24,51 @@ It is also possible via BIND to forward your requests to a public DNS server, me
 
 
 \subsection{Setup BIND Server}
-To install a BIND server on Linux type in "sudo apt-get install bind[9]". This will install version 9 of the BIND server software. To check if installation if successful type \code{named -v} and if it is successful, it will show \code{BIND 9.8.1-P1}. 
-For testing purpose, \textit{dnsutils} have been used, because it can be used to see response time for the DNS lookup with the commannd \code{dig -x [IP-address]}.
+To install a BIND server on Linux type in \code{sudo apt-get install bind[9]}. This will install version 9 of the BIND server software. To check if the installation is successful type \code{named -v} where -- if successful, \code{BIND 9.8.1-P1} will be responded. 
+For testing purpose, \textit{dnsutils} have been used, because it can be used to see response time for the DNS lookup with the command \code{dig -x [IP-address]}.
+
+\subsection{Caching name server}
+A caching name server will find the answer to name queries and remember the answer the next time you need it. To set up the caching name server the configuration file /ect/resolv.conf needs to contain the following:\\ \code{nameserver 127.0.0.1}\\
+To test the caching name server type \code{dig ubuntu.com} twice to see that the response time is a lot faster the second time:
+
+\begin{figure}[H]
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{dig1}
+\caption{Use of the command \code{dig ubuntu.com} the first time}
+\label{fig:dig1}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[b]{0.45\linewidth}
+\centering
+\includegraphics[width=\textwidth]{dig2}
+\caption{Use of the command \code{dig ubuntu.com} the second time}
+\label{fig:dig2}
+\end{minipage}
+\end{figure}
 
 \subsection{Forward to public DNS}
 If the school wants to forward their requests to a public DNS, e.g. OpenDNS, they have to do a bit of research on finding the optimal solution for them. 
-There is a lot of public DNS servers, where some of them are good at filtering bad hostnames, but are in the same time not always the fastest. 
+There is a lot of public DNS servers, where some of them are good at filtering bad hostnames, but are in the same time not always the fastest.
 In this section tests are made to find the fastest response time.
 
 To find an optimal solution, Google's Test Bench (GTB) have been used.
 In this case GTB looked up around 4500 servers and tested them all to find the fastest server in average.
 
-\begin{figure}[hbtp]
+\begin{figure}[H]
 \centering
 \includegraphics[scale=0.5]{Figurer/NamebenchTest.png}
 \caption{Output from Google Test Bench test}
 \label{fig:testBench}
 \end{figure}
 
-The test in Figure \ref{fig:testBench} and Table \ref{tab:Forwarding} shows, that Cirque DK have the lowest mean response time with 18ms, and the default DNS have a mean response time on 36 ms. 
+The test in Figure \ref{fig:testBench} and Table \ref{tab:Forwarding} shows, that Cirque DK have the lowest mean response time with 18 ms, and the default DNS have a mean response time on 36 ms. 
 One of the more popular public DNS is openDNS, which is a little faster than the default DNS with 29 ms. 
 
 In a way of verifying the results of GTB, a manual test with \code{dig -x} have been made with 5 different internet sites and their given response time. 
 To test the servers, the file located at \textit{/etc/bind/named} have to be edited with the address of the DNS server it shall forward to. 
 
-\begin{table}
+\begin{table}[H]
 
 \begin{center}
   \begin{tabular}{l|c|c}
@@ -79,25 +99,17 @@ To test the servers, the file located at \textit{/etc/bind/named} have to be edi
 \end{table}
 
 
-It is hard to make a final conclusion based on our test, since the response times are unstable (e.g. even though bt.dk was tested via Cirquie.DK two times under the same conditions, first test resulted in 356 ms and second in 906 ms), which is why GTB is a good tool to use. 
+It is hard to make a final conclusion based on our test, since the response times are unstable (e.g. even though bt.dk was tested via Cirquie.DK two times under the same conditions; first test resulted in 356 ms and second in 906 ms), which is why GTB is a good tool to use. 
 However, we can conclude that even if you forward to the one tested to be the fastest public DNS, you cannot be sure it is the fastest every single time, since the server might be busy.
 
 \subsection{Filtering}
 A DNS server can also be used as a simple filter, in the way of not providing the IP for harmful or illegal hostnames. 
-Some public DNS servers, like OpenDNS, have this filter build-in, which means you in a simple way can archive a bit of security.
+Some public DNS servers, like OpenDNS, have this filter build-in, which means that you in a simple way can archive a bit of security.
 
 In the same way, it is also possible to block specific hostnames with BIND, which can be useful if you want your filter to be more specialized. 
 This can be used if a school wants to block for e.g. Facebook or Ekstrabladet.dk.
 
 The problem about this way of filtering is if the users look up the IP directly. 
 In that case, the DNS server will not be used and the filter will therefore not be used either and other methods have to be used.
-
-
-\subsection{Discussion}
-There is a lot of ways of finding a solution for the school. 
-To retrieve the caching functionality, BIND is simple and easy to set up and use. 
-If wanted, it can furthermore be specialized in the way of setting up a filter or forwarding requests to a public DNS server.  
-
-BIND is a simple solution, but if better security or caching is wanted, a custom solution is needed. However, for a small school this might not be needed, and therefore BIND would be the suggested choice.
 
 \end{document} 
