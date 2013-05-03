@@ -23,6 +23,43 @@ Therefore middleware is useful when developing large and complex distributed sys
 \\
 When choosing between middlewares it is important to know which standard the different middlewares are using. There is a lot of standards that the middleware can support, e.g. which network the middleware supports or if the middleware supports a medical standard for transferring images and data between devices in the medical industry \cite{DDS_slides}.\\
 There are various implementations of the standards e.g. OpenDDS by Object Computing Inc. which is an open source implementation. Among the commercial implementations Real-Time Innovations (RTI) has developed a middleware called Connext.
+\\
+
+\section{Data distribution service for real-time systems}
+The DDS is a specification standard, approved by the Object Management Group (OMG), that facilitates data-communication through the data-centric publish/subscribe paradigm \cite{RTI}. The DDS standard supports deterministic data-delivery (if the underlying data-link and physical layer supports it), a large number of configuration parameters and a low overhead on memory and CPU \cite{DDS-slides}.\\
+The specification for DDS consists of two distinct sections; Data Logical Reconstruction Layer (DLRL) and Data-Centric Publish-Subscribe (DCPS) \cite{DDS-slides}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{Figure/DLRLandDCPS.png}
+\caption{The two sections in the DDS specification \cite{DDS-slides}}
+\label{Fig:DLRL}
+\end{figure}
+
+The DLRL is an optional upper layer that allows a simpler integration of the DDS into the application layer. It provide a more natural access to data as it updates a local copy of the data, which allows the application to access the data as if local \cite{DDS-slides}. It outlines how an application can interface with DCPS data fields. According to Gerardo Pardo from RTI no DDS vendors supports the DLRL any more \cite{DLRL-support}.\\
+The DCPS is the lower layer which the application uses to communicate with other DDS-enabled applications; it provides efficient delivery of the proper information to the proper recipients \cite{wiki-DDS}. The DCPS comprises the following entities, which can also be seen in Figure ~\ref{Fig:Entities}:
+\begin{itemize}
+  \item \textbf{Domain}\\The basic construct that binds the individual applications together and where data is send and received from. The domain is the defined communication-area in which the data is being shared.
+  \item \textbf{Domain participant}\\This object enables the developer to specify default Quality of Service (QoS) parameters for all entities in the corresponding domain.
+  \item \textbf{Data Writer}\\The primary access point for an application to publish data into the data domain. All data that 
+  \item \textbf{Publisher}
+  \item \textbf{Data Reader}
+  \item \textbf{Subscriber}
+  \item \textbf{Topic}
+  \\\cite{RTI}
+\end{itemize}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=1]{Figure/DDSentities.png}
+\caption{The DDS/DCPS entities \cite{RTI}}
+\label{Fig:Entities}
+\end{figure}
+
+
+
+As described in the section above the RTI Connext implements the DDS standard
 
 
 \end{document} 
