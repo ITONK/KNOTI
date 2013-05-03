@@ -1,9 +1,3 @@
-%Report template by Christian Fischer Pedersen for IT-ONK
-%--------------------------------------------------------
-
-%Page layout
-%--------------------------------------------------------
-\documentclass[a4paper,10pt]{report}
 \usepackage{fancyhdr}
 \usepackage[left=3cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 
@@ -39,7 +33,6 @@
 \renewcommand{\lstlistingname}{Code snippet}
 \lstdefinestyle{Code}
 {
-	title 			= Code snippet,
 	keywordstyle	= \bfseries\ttfamily\color[rgb]{0,0,1},
 	identifierstyle	= \ttfamily,
 	commentstyle	= \color[rgb]{0.133,0.545,0.133},
@@ -119,48 +112,3 @@
 \usepackage{appendix}
 \usepackage{amssymb}
 \usepackage{url}
-
-
-
-%Begin document
-%----------------------------------------------------------
-\begin{document}
-
-\begin{titlepage}
-\begin{center}
-{\LARGE \textbf{Domain Name System}}
-
-
-\vspace{4cm}
-\textbf{Handed in April 25, 2013, by Team 2}\\~\\
-\begin{tabular}{ll}
-Rasmus Bækgaard  & 10893@iha.dk \\
-Anders Kielsholm  & 10749@iha.dk \\
-Lasse Hansen  & 10063@iha.dk \\
-Mia Leth Sørensen & 10959@iha.dk \\
-\end{tabular}
-\vfill
-\textbf{Electrical and Computer Engineering}\\
-\textbf{Aarhus University}\\
-\textbf{Finlandsgade 22, 8200 Aarhus N, Denmark}
-\end{center}
-\end{titlepage}
-
-\subfile{Abstract}
-
-\subfile{Introduction}
-
-\subfile{Subject}
-
-\subfile{Prototype}
-
-\subfile{Conclusion}
-
-
-%\nocite{*}
-\bibliographystyle{ieeetr}
-\bibliography{references}
-
-%\end{thebibliography}
-
-\end{document}
