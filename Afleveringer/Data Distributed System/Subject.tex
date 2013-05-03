@@ -16,18 +16,37 @@ In distributed systems, where multiple independent computers are connected on a 
 
 Each application is offered the same interface through the middleware layer which extends over multiple machines \cite[p. 3]{Tanenbaum}. The middleware is a principle that makes it easier for developers to scale a distributed system, as the developer can focus on the interface to the middleware and not the layers beneath. This makes the environment homogeneous as the differences in network technology, hardware architecture, OS, programming languages and geographical locations etc. \cite{DDS-slides} \cite[p. 68]{Coulouris}.
 \\
-To support the different programming languages used in the applications the middleware contains the Interface Definition Language (IDL). It takes care of mapping the language into IDL-standard before passing the data to the wanted computer, where the middleware again maps the data into the application language \cite{RTI}.
+To support the different programming languages used in the applications the middleware supports the Interface Definition Language (IDL). This mean that each application transform the programming langauge into IDL and transfer it into the middleware. The middleware takes care of mapping the IDL
+language to the wanted programmering langauge for the given application. \cite{RTI}.
 \\
 Therefore middleware is useful when developing large and complex distributed systems as it connects the different parts with a "pipe" that makes data-sharing and communication efficient \cite{DDS-slides} \cite[p. 68]{Coulouris}. Also it should be considered that the middleware-software should be installed on all the involved computers which can raise the CPU load. Depending on the type of hardware that is used the developers should choose a sufficient middleware \cite{DDS-slides}.
 \\
 \\
 When choosing between middlewares it is important to know which standard the different middlewares are using. There is a lot of standards that the middleware can support, e.g. which network the middleware supports or if the middleware supports a medical standard for transferring images and data between devices in the medical industry \cite{DDS_slides}.\\
 There are various implementations of the standards e.g. OpenDDS by Object Computing Inc. which is an open source implementation. Among the commercial implementations Real-Time Innovations (RTI) has developed a middleware called Connext.
+
+Mia - Skal der skrives mere her? Synes Christian sagde noget men har pt glemt det - ved ikke om du går lidt i dybden med det i dit afsnit? Det var noget de forskelilge standarder, mens synes vi går i dybden med det når vi forklare DDS.
+\\\\
+A concrete implementation of this middleware in a distributed system, is seen below.
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.4]{Figure/MiddelwareImplementation.png}
+\caption{Connext in a distributed system}
+\end{figure}
+
+The figure shows, that a C++ application on Machine 3 is transfered to the middleware. The middleware then handle and transform it, so it can be used on Machine 2, even if the programmering language and the machine is different from each other. 
 \\
+The communication in the middelware is performed by a publish-subscriper paradigm, called Data-Centric publish-subscripe, which is explained in details in a later section. Other forms of middelware communication paradigms is e.g. Message Passing, Message queuing, Remote procedure call and derivatives and etc.\cite{DDS-slides}.\\
+These commuincation paradigms in middelware decouples data producers and consumers in different ways, and they is categorized into 3 different decouplings. These are Space, time and flow decoupling. \\
+Space decoupling is if the producers and the consumers dont know each other, which means that they dont got a strong(decideret?) reference to each other. 
+\\
+Time decoupling is if the interaction is asynchronous, which means that the data being passed can be used later and not when it is recieved. An example on an asyncronous communication could be a mail client which recieves mails, but the mails can be read at a later time then when its arrived. A syncronous communication could be a phone call, where its only possible to talk when another one is calling you. \\
+Flow decoupling is if the data production and consumption are not blocking the flow for the producer or the consumer. This means that the producer and the consumer dont block each other when they used the data being passed between them. 
 
 \section{Data distribution service for real-time systems}
 The DDS is a specification standard, approved by the Object Management Group (OMG), that facilitates data-communication through the data-centric publish/subscribe paradigm \cite{RTI}. The DDS standard supports deterministic data-delivery (if the underlying data-link and physical layer supports it), a large number of configuration parameters and a low overhead on memory and CPU \cite{DDS-slides}.\\
 The specification for DDS consists of two distinct sections; Data Logical Reconstruction Layer (DLRL) and Data-Centric Publish-Subscribe (DCPS) \cite{DDS-slides}.
+
 
 \begin{figure}[H]
 \centering
