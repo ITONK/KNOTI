@@ -6,22 +6,24 @@
 \section{Conclusion}
 To make the development of a distributed system easier developers can use a middleware which is a software installed on all the implicated computers. The middleware-software is between the application and the physical layer which makes communication between applications in different programming languages on different hardware and operating systems easy.
 
-The characteristics of a middleware is:
+The characteristics of a middleware are:
 \begin{itemize}
-\item[Adaptive]\\The middleware makes applications adaptable to changing availability of system resources.
-\item[Flexibility and scalability]\\It is easy to add or remove more computers to the network as the middleware can offer space-decoupling; the implicated computers does not know about each others existence.
-\item[Security]\\
-\item[Portability]\\Middleware hides the problems that can occur due to different hardware/software environments.
-\item[Connectivity and intercommunication]\\The main functionality of middlewares is that it enables a application to share data and communicate transparently with other applications on the network.
+\item Adaptive\\The middleware makes applications adaptable to changing availability of system resources.
+\item Flexibility and scalability]\\It is easy to add or remove more computers to the network as the middleware can offer space-decoupling; the implicated computers does not know about each others existence.
+\item Security\\Can allow applications authorized access to resources. Also all the implicated computers need to be on the same domain in order to communicate.
+\item Portability\\Middleware hides the problems that can occur due to different hardware/software environments.
+\item Connectivity and intercommunication\\The main functionality of middlewares is that it enables a application to share data and communicate transparently with other applications on the network.
 \end{itemize}
 
-These characteristics makes it easier to write complex applications with the aim of sharing or transferring data. Furthermore the developers can focus on the application and the middleware-interface instead of concerning about the link and physical layers.
+These characteristics makes it easier to write complex applications with the aim of sharing or transferring data. Furthermore the developers can focus on the application and the middleware-interface instead of concerning about the link and physical layers.\\The most middleware are proprietary but it is possible to use open source middleware if wanted.
+
+
+The implementation of a middleware can use a standard which ensure that most partners can collaborate when sharing data as they use the same interface. The DDS standard is using a data-centric publisher/subscribe communication paradigm where publishers and subscribers communicate using categorized messages which are not send to a specific subscriber. The subscribers subscribes to specific categories and can filter on topic, content or type. This kind of communication involves a loose coupling which enable large-scale and dynamic networks.
 
 \section{Discussion}
-open middleware vs. proprietary middleware
+Whether or not to use a middleware depends on the size and the aims of the network as the software need to be installed on all implicated computers. If the network only consists of few computers it can be easier for the developers not to use middleware. But if applications made by different developers it can be an advantage to use a middleware as the developers only have to learn about the middleware-interface and not take the possible hardware-, software-, and/or languages-differences into account. Furthermore middleware enables scalability of the network, but if it is certain that a small network will not expand, it might not be recommended to use a middleware. Developers should also consider which kind of middleware to use as different vendors provides middleware aimed for certain purposes. 
 
 \section{Perspectives}
 What are the perspectives on the technology and your prototype? 
-
 
 \end{document} 
