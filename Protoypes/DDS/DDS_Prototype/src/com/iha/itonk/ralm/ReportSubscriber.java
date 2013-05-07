@@ -1,21 +1,22 @@
+/* 
+ * Made by:
+ * 	10796 - Anders Kielsholm
+ *  10063 - Lasse Hansen
+ *  10893 - Rasmus Bækgaard
+ *  10959 - Mia Louise Leth Sørensen
+ *  
+ *  Aarhus School of Engineering - www.iha.dk
+ */
+
 package com.iha.itonk.ralm;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
 import com.rti.dds.domain.DomainParticipant;
-import com.rti.dds.infrastructure.InstanceHandle_t;
-import com.rti.dds.infrastructure.StatusKind;
-import com.rti.dds.subscription.Subscriber;
 import com.rti.dds.topic.Topic;
-import com.rti.dds.type.builtin.KeyedString;
-import com.rti.dds.type.builtin.KeyedStringDataWriter;
 
 public class ReportSubscriber {
+	
+	// Main method. Arguments: 1) Name of station 2-?) Topics to listen on
 	public static final void main(String[] args) {
-		
-		System.out.println("Welcome to the " + (args.length > 0 ? args[0] : "Unknown station"));
 		
 		if(args.length < 2) {
 			System.out.println("This station does not have any topics to receive." +
@@ -24,27 +25,29 @@ public class ReportSubscriber {
 			return;
 		}
 		
-		/* GET DOMAIN */
+		// Get domain
 		DomainParticipant domain = RTIHelper.getDomain();
         if (domain == null) {
             System.err.println("Could not create new instance of domain participant");
             return;
         }
-        
+
+		System.out.println("Welcome to the " + (args.length > 0 ? args[0] : "Unknown station"));
         System.out.println("Will listen for:");
         
+        // Create one listener and make it subscribe for the topics defined in argument 2-?
         ReportListener listener = new ReportListener();
         for(int i = 1; i < args.length; i++) {
         	Topic topic = RTIHelper.createTopic(domain, args[i]);
-        	domain.create_datareader(
-        			topic, 
-                    Subscriber.DATAREADER_QOS_DEFAULT,
-                    listener,         // Listener
-                    StatusKind.DATA_AVAILABLE_STATUS);
+        	RTIHelper.createKeyedStringReader(domain, listener, topic);
         	
+        	// Print that we will listen for this topic
         	System.out.println(" - " + args[i]);
         }
         
         while(true){}
+        
+        // Normally we should clean up the domain before leaving,
+        // but we've left it out since this is just prototyping 
 	}
 }
