@@ -18,15 +18,20 @@ In distributed systems, multiple independent computers are connected on a networ
 Each application is offered the same interface through the middleware layer which extends over multiple machines \cite[p. 3]{Tanenbaum}. The middleware is a principle that makes it easier for developers to scale a distributed system, as the developer can focus on the interface to the middleware and not the layers beneath. This makes the environment homogeneous as the differences in network technology, hardware architecture, OS, programming languages and geographical locations etc. is not to be taken care of by developers \cite{DDS-slides} \cite[p. 68]{Coulouris}.
 \\
 To support the different programming languages used in the applications, the middleware supports the Interface Definition Language (IDL). It is a standard language for defining the interfaces which enables communication between applications that do not share programming language. This means that each application transform the programming langauge into IDL and transfer it into the middleware and the middleware then transform it to the given target's applications programmering langauge. \cite{DDS-slides} \cite{RTI} \cite{wiki-idl}.
-\\
-Middleware is useful when developing large and complex distributed systems as it connects the different parts with a "pipe" that makes data-sharing and communication efficient \cite{DDS-slides} \cite[p. 68]{Coulouris}. It should be considered that the middleware-software should be installed on all the involved computers, which can raise the CPU load. Depending on the type of hardware that is used the developers should choose a sufficient middleware \cite{DDS-slides}.
-\\
-\\
-When choosing between middlewares it is important to know which standard the different middlewares are using. There is a lot of standards that the middleware can support, e.g. which network the middleware supports or if the middleware supports a medical standard for transferring images and data between devices in the medical industry \cite{DDS_slides}.\\
-There are various implementations of the standards e.g. OpenDDS by Object Computing Inc. which is an open source implementation. Among the commercial implementations Real-Time Innovations (RTI) has developed a middleware called Connext.\\
 
-Mia - Skal der skrives mere her? Synes Christian sagde noget men har pt glemt det - ved ikke om du går lidt i dybden med det i dit afsnit? Det var noget de forskelilge standarder, mens synes vi går i dybden med det når vi forklare DDS.
-Lasse - nej, jeg synes det er fint som det står :) Men ja, vi mangler at skrive noget om de forskellige standarder og OMG. jeg kommer ikke rigtig ind på standarderne i mit afsnit, så vi skal have flettet det ind et sted... 
+\\
+Middleware is useful when developing large and complex distributed systems as it connects the different parts with a "pipe" that makes data-sharing and communication efficient \cite{DDS-slides} \cite[p. 68]{Coulouris}. Also it is possible to chance the topology of the network as the middleware provides transparency in the co It should be considered that the middleware-software should be installed on all the involved computers, which can raise the CPU load. Depending on the type of hardware that is used the developers should choose a sufficient middleware \cite{DDS-slides}.
+\\
+\\
+When choosing between middlewares it is important to know which standard the different middlewares are using. The middleware implemented by different organizations/companies are categorized into Standard types depending on the focus of the middleware, e.g. the DICOM middleware which implements a medical standard for transferring images and data between devices in the medical industry \cite{DDS_slides}.\\
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.6]{Figure/Standards.png}
+\caption{An example of middleware standards and their types \cite{DDS-slides}.}
+\end{figure}
+
+There are various implementations of these standards e.g. DDS which has the standard-type "Industrial automation and Control". The DDS standard is implemented in the software "OpenDDS" by Object Computing Inc. which is an open source implementation. Among the commercial implementations Real-Time Innovations (RTI) has developed a DDS-standard middleware called Connext.\\The DDS specification is developed by RTI and Prismtech and is approved as a standard by Object Management Group (OMG) - An international open membership consortium developing middleware standards. They also standardize Unified Modelling Language (UML). This example indicates that companies are collaborating with the "standard-approval-organizations" to further develop the standards and make them contemporary \cite{DDS-slides}.\\
 
 A concrete implementation of this middleware in a distributed system is seen below.
 \begin{figure}[H]
@@ -47,7 +52,6 @@ Flow decoupling is if the data production and consumption are not blocking the f
 \section{Data distribution service for real-time systems}
 The DDS is a specification standard, approved by the Object Management Group (OMG), that facilitates data-communication through the data-centric publish/subscribe paradigm \cite{RTI}. The DDS standard supports deterministic data-delivery (if the underlying data-link and physical layer supports it), a large number of configuration parameters and a low overhead on memory and CPU \cite{DDS-slides}.\\
 The specification for DDS consists of two distinct sections; Data Logical Reconstruction Layer (DLRL) and Data-Centric Publish-Subscribe (DCPS) \cite{DDS-slides}.
-
 
 \begin{figure}[H]
 \centering
@@ -79,8 +83,7 @@ The DCPS is the lower layer which the application uses to communicate with other
   \item Conditions and WaitSets where the application access the data from the Data Reader when specified conditions are met.
   \end{itemize}
   When the data has been received it can be accessed by "take()" which removes data or by "read()" which allows data to be used multiple times.
-  \item \textbf{Topic}\\Topics are information about a single data type. The Topic of a given publisher on one computer must match the Topic of an associated subscriber - otherwise communication will not take place. A topic consists of a Topic Name (a string that uniquely identifies the Topic within the domain) and a Topic Type (the definition of the data contained within the Topic). Within the definition of the Topic Type one or more data can be chosen to be a Key. They are used by the DDS middleware to sort incoming data and provide scalability as the Key can be used to identify the data-source instead of using the Topic Name as an identifier. When Keys are used only one Topic is needed. As an example of the use of Keys refers to the Prototype-section. KEYS ARE USED IN OUR PROTOTYPE??
-  \\\cite{RTI} \cite{opendds} \cite{DDS-slides}
+  \item \textbf{Topic}\\Topics are information about a single data type. The Topic of a given publisher on one computer must match the Topic of an associated subscriber - otherwise communication will not take place. A topic consists of a Topic Name (a string that uniquely identifies the Topic within the domain) and a Topic Type (the definition of the data contained within the Topic). Within the definition of the Topic Type one or more data can be chosen to be a Key. They are used by the DDS middleware to sort incoming data and provide scalability as the Key can be used to identify the data-source instead of using the Topic Name as an identifier. When Keys are used only one Topic is needed \cite{RTI} \cite{opendds} \cite{DDS-slides}. As an example of the use of Keys refers to the Prototype-section where the address of the accident is chosen as key. This enables the subscriber to sort the data regarding to accident-address.
 \end{itemize}
 
 The figure below shows another conceptual view on publication, subscription and topic: 
