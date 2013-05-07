@@ -40,7 +40,7 @@ public class CityPublisher {
         int i = 0;
         for(String topic_str : RTIHelper.TOPICS){
         	Topic topic = RTIHelper.createTopic(domain, topic_str);
-        	KeyedStringDataWriter writer = RTIHelper.createKeyStringWriter(domain, topic);
+        	KeyedStringDataWriter writer = RTIHelper.createKeyedStringWriter(domain, topic);
         	writers.add(writer);
         	
         	System.out.println("  "+ i + ": " + topic_str);

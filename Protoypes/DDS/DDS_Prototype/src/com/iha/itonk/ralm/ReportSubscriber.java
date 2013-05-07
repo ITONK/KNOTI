@@ -11,8 +11,6 @@
 package com.iha.itonk.ralm;
 
 import com.rti.dds.domain.DomainParticipant;
-import com.rti.dds.infrastructure.StatusKind;
-import com.rti.dds.subscription.Subscriber;
 import com.rti.dds.topic.Topic;
 
 public class ReportSubscriber {
@@ -41,12 +39,9 @@ public class ReportSubscriber {
         ReportListener listener = new ReportListener();
         for(int i = 1; i < args.length; i++) {
         	Topic topic = RTIHelper.createTopic(domain, args[i]);
-        	domain.create_datareader(
-        			topic, 
-                    Subscriber.DATAREADER_QOS_DEFAULT,
-                    listener,         // Listener
-                    StatusKind.DATA_AVAILABLE_STATUS);
+        	RTIHelper.createKeyedStringReader(domain, listener, topic);
         	
+        	// Print that we will listen for this topic
         	System.out.println(" - " + args[i]);
         }
         
