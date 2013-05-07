@@ -1,3 +1,13 @@
+/* 
+ * Made by:
+ * 	10796 - Anders Kielsholm
+ *  10063 - Lasse Hansen
+ *  10893 - Rasmus Bækgaard
+ *  10959 - Mia Louise Leth Sørensen
+ *  
+ *  Aarhus School of Engineering - www.iha.dk
+ */
+
 package com.iha.itonk.ralm;
 
 import java.io.BufferedReader;
@@ -11,19 +21,21 @@ import com.rti.dds.type.builtin.KeyedString;
 import com.rti.dds.type.builtin.KeyedStringDataWriter;
 
 public class CityPublisher {
+	
+	// Main method. Arguments: 1) Name of city
 	public static final void main(String[] args) {
-		
-		System.out.println("Welcome to the city of " + (args.length > 0 ? args[0] : "Unknown"));
-		
-		/* GET DOMAIN */
+				
+		// Get domain
 		DomainParticipant domain = RTIHelper.getDomain();
         if (domain == null) {
             System.err.println("Could not create new instance of domain participant");
             return;
         }
         
+		System.out.println("Welcome to the city of " + (args.length > 0 ? args[0] : "Unknown"));
         System.out.println("Available categories (topics):");
         
+        // Create a DataWriter for each of the topics
         ArrayList<KeyedStringDataWriter> writers = new ArrayList<KeyedStringDataWriter>();
         int i = 0;
         for(String topic_str : RTIHelper.TOPICS){
@@ -35,10 +47,9 @@ public class CityPublisher {
         	i++;
         }
                 
+        // Based on input, send to one of the DataWriters
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        
-        while(true)
-        {
+        while(true) {
         	try{
         		System.out.print("\nChoose a category (number): ");
         		int topic_number = Integer.parseInt(reader.readLine());
@@ -59,5 +70,8 @@ public class CityPublisher {
         		System.out.println("Something went wrong.. Try again!");
         	}
         }
+        
+        // Normally we should clean up the domain before leaving,
+        // but we've left it out since this is just prototyping 
 	}
 }

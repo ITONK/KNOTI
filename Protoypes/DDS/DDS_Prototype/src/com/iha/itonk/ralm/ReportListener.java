@@ -1,3 +1,13 @@
+/* 
+ * Made by:
+ * 	10796 - Anders Kielsholm
+ *  10063 - Lasse Hansen
+ *  10893 - Rasmus Bækgaard
+ *  10959 - Mia Louise Leth Sørensen
+ *  
+ *  Aarhus School of Engineering - www.iha.dk
+ */
+
 package com.iha.itonk.ralm;
 
 import com.rti.dds.infrastructure.RETCODE_ERROR;
