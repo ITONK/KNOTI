@@ -25,12 +25,14 @@
 % Indsættes mellem \begin{lstlisting} og \end{lstlisting}
 % Se eksempel under pakken
 %----------------------------------------------------------
+\newcommand{\codeTitle}{Code snippet}
+
 \usepackage{listings}
 \usepackage{color}
 \usepackage{textcomp}
 \definecolor{listinggray}{gray}{0.9}
 \definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
-\renewcommand{\lstlistingname}{Code snippet}
+\renewcommand{\lstlistingname}{\codeTitle}
 \lstdefinestyle{Code}
 {
 	keywordstyle	= \bfseries\ttfamily\color[rgb]{0,0,1},
@@ -84,6 +86,7 @@
 }
 
 \lstdefinestyle{Code-C} {language=C, style=Code}
+\lstdefinestyle{Code-Java} {language=Java, style=Code}
 \lstdefinestyle{Code-C++} {language=[Visual]C++, style=Code}
 \lstdefinestyle{Code-VHDL} {language=VHDL, style=Code}
 \lstdefinestyle{Code-Bash} {language=Bash, style=Code}
@@ -112,3 +115,5 @@
 \usepackage{appendix}
 \usepackage{amssymb}
 \usepackage{url}
+
+\newcommand{\bs}{\backslash}

@@ -5,12 +5,15 @@
 This chapter will cover the fundamentals in data distribution service (DDS), explaining the concept of middleware and DDS for real-time systems.
 \\
 \section{Middleware}
-In distributed systems, multiple independent computers are connected on a network to cooperate in achieving the same goal. These computers can be placed with different geographical locations and have different operating systems (OS) \cite[p. 2]{Tanenbaum}.
-\\ To make the development of a distributed system easier developers can use middleware, which is software between the application and the physical layers on the computer. The middleware contributes to the development as it hides the problems that can occur due to different software, hardware and OS's from each application \cite[p. 3]{Tanenbaum}.
+In distributed systems, multiple independent computers are connected on a network to cooperate in achieving the same goal. 
+These computers can be placed with different geographical locations and have different operating systems (OS) \cite[p. 2]{Tanenbaum}.
+\\ 
+To make the development of a distributed system easier developers can use middleware, which is software between the application and the physical layers on the computer. 
+The middleware contributes to the development as it hides the problems that can occur due to different software, hardware and OS's from each application \cite[p. 3]{Tanenbaum}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=1]{Figure/Middleware.png}
+\includegraphics[scale=1]{Middleware.png}
 \caption{A distributed system with middleware \cite[p. 3]{Tanenbaum}}
 \label{Fig:Middleware}
 \end{figure}
@@ -31,7 +34,7 @@ Lasse - nej, jeg synes det er fint som det står :) Men ja, vi mangler at skrive
 A concrete implementation of this middleware in a distributed system is seen below.
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{Figure/MiddelwareImplementation.png}
+\includegraphics[scale=0.4]{MiddelwareImplementation.png}
 \caption{Connext in a distributed system}
 \end{figure}
 
@@ -51,7 +54,7 @@ The specification for DDS consists of two distinct sections; Data Logical Recons
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.8]{Figure/DLRLandDCPS.png}
+\includegraphics[scale=0.8]{DLRLandDCPS.png}
 \caption{The two sections in the DDS specification \cite{DDS-slides}}
 \label{Fig:DLRL}
 \end{figure}
@@ -61,7 +64,7 @@ The DCPS is the lower layer which the application uses to communicate with other
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.8]{Figure/DDSentities.png}
+\includegraphics[scale=0.8]{DDSentities.png}
 \caption{The DDS/DCPS entities \cite{RTI}}
 \label{Fig:Entities}
 \end{figure}
@@ -87,7 +90,7 @@ The figure below shows another conceptual view on publication, subscription and 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.7]{Figure/PublicationAndSubscription.png}
+\includegraphics[scale=0.7]{PublicationAndSubscription.png}
 \caption{A simple conceptual view of publication and subscription \cite{ddsopen}}
 \end{figure}
 
@@ -100,19 +103,19 @@ The figure below shows another conceptual view on publication, subscription and 
 \\
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{Figure/SD3.png}
+\includegraphics[scale=0.5]{SD3.png}
 \caption{The publisher on the left is publishing data with the Topic Name "Circle" and the Topic Type "Green". The subscriber on the right is receiving the data as it subscribes to the same Topic.}
 \end{figure}
 \vspace{10 pt}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{Figure/SDhold.png}
+\includegraphics[scale=0.5]{SDhold.png}
 \caption{With the mouse it is possible to change the speed and the orientation of the circle and this behavior is mirrored in the subscriber on the right}
 \end{figure}
 \vspace{10 pt}
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{Figure/SDwContentAndTimeFiltering.png}
+\includegraphics[scale=0.5]{SDwContentAndTimeFiltering.png}
 \caption{The subscriber on the right is using two QoS parameters; it only wants data every 1000 milliseconds; the red triangle is only mirrored once every second, and content-filtering; the subscriber only wants data that matches the shaded area. If the cyan-coloured data is outside the content-filter then the Data Reader will not read the data, and nothing is being provided to the application}
 \end{figure}
 \vspace{10 pt}

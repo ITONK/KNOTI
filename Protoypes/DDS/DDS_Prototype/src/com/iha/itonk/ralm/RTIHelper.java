@@ -40,7 +40,6 @@ public final class RTIHelper {
 	}
 	
 	static Topic createTopic(DomainParticipant domain, String topicStr) {
-        // Create the topic "A Topic" for the String type
         return domain.create_topic(
                 topicStr, 
                 KeyedStringTypeSupport.get_type_name(), 
