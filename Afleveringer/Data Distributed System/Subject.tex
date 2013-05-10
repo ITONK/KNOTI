@@ -32,7 +32,7 @@ It should be considered that the middleware-software should be installed on all 
 Depending on the type of hardware that is used the developers should choose a sufficient middleware \cite{DDS-slides}.
 \\
 \\
-When choosing between middlewares it is important to know which standard the different middlewares are using. The middleware implemented by different organizations/companies are categorized into Standard types depending on the focus of the middleware, e.g. the DICOM middleware which implements a medical standard for transferring images and data between devices in the medical industry \cite{DDS_slides}.
+When choosing between middlewares it is important to know which standard the different middlewares are using. The middleware implemented by different organizations/companies are categorized into Standard types depending on the focus of the middleware, e.g. the DICOM middleware which implements a medical standard for transferring images and data between devices in the medical industry \cite{DDS-slides}.
 
 
 \begin{figure}[htbp]
@@ -113,13 +113,13 @@ The DCPS is the lower layer which the application uses to communicate with other
   \item Conditions and WaitSets where the application access the data from the Data Reader when specified conditions are met.
   \end{itemize}
 
-When the data has been received it can be accessed by "take()" which removes data or by "read()" which allows data to be used multiple times.
+When the data has been received it can be accessed by \code{take()} which removes data or by \code{read()} which allows data to be used multiple times.
 
   \item \textbf{Topic}
   \\
   Topics are information about a single data type. 
   The Topic of a given publisher on one computer must match the Topic of an associated subscriber - otherwise communication will not take place. 
-  A topic consists of a Topic Name (a string that uniquely identifies the Topic within the domain) and a Topic Type (the definition of the data contained within the Topic). 
+  A Topic consists of a Topic Name (a string that uniquely identifies the Topic within the domain) and a Topic Type (the definition of the data contained within the Topic). 
   Within the definition of the Topic Type one or more data can be chosen to be a Key. 
   They are used by the DDS middleware to sort incoming data and provide scalability as the Key can be used to identify the data-source instead of using the Topic Name as an identifier. 
   When Keys are used only one Topic is needed \cite{RTI} \cite{opendds} \cite{DDS-slides}. 
@@ -132,7 +132,7 @@ Figure \ref{fig:pubSub} shows another conceptual view on publication, subscripti
 \begin{figure}[H]
 \centering
 \includegraphics[scale=0.7]{PublicationAndSubscription}
-\caption{A simple conceptual view of publication and subscription \cite{ddsopen}}
+\caption{A simple conceptual view of publication and subscription \cite{opendds}}
 \label{fig:pubSub}
 \end{figure}
 
