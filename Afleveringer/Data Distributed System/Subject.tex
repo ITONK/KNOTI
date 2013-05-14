@@ -1,57 +1,88 @@
 \documentclass[Main]{subfiles}
 \begin{document}
 
-\chapter{}
+\chapter{Distributed Data System}
 This chapter will cover the fundamentals in data distribution service (DDS), explaining the concept of middleware and DDS for real-time systems.
 \\
 \section{Middleware}
-In distributed systems, multiple independent computers are connected on a network to cooperate in achieving the same goal. These computers can be placed with different geographical locations and have different operating systems (OS) \cite[p. 2]{Tanenbaum}.
-\\ To make the development of a distributed system easier developers can use middleware, which is software between the application and the physical layers on the computer. The middleware contributes to the development as it hides the problems that can occur due to different software, hardware and OS's from each application \cite[p. 3]{Tanenbaum}.
+In distributed systems, multiple independent computers are connected on a network to cooperate in achieving the same goal. 
+These computers can be placed with different geographical locations and have different operating systems (OS) \cite[p. 2]{Tanenbaum}.
+\\ 
+To make the development of a distributed system easier developers can use middleware, which is software between the application and the physical layers on the computer. 
+The middleware contributes to the development as it hides the problems that can occur due to different software, hardware and OS's from each application \cite[p. 3]{Tanenbaum}.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
-\includegraphics[scale=1]{Figure/Middleware.png}
+\includegraphics[scale=1]{Middleware.png}
 \caption{A distributed system with middleware \cite[p. 3]{Tanenbaum}}
 \label{Fig:Middleware}
 \end{figure}
 
-Each application is offered the same interface through the middleware layer which extends over multiple machines \cite[p. 3]{Tanenbaum}. The middleware is a principle that makes it easier for developers to scale a distributed system, as the developer can focus on the interface to the middleware and not the layers beneath. This makes the environment homogeneous as the differences in network technology, hardware architecture, OS, programming languages and geographical locations etc. is not to be taken care of by developers \cite{DDS-slides} \cite[p. 68]{Coulouris}.
+Each application is offered the same interface through the middleware layer which extends over multiple machines \cite[p. 3]{Tanenbaum}. 
+The middleware is a principle that makes it easier for developers to scale a distributed system, as the developer can focus on the interface to the middleware and not the layers beneath. 
+This makes the environment homogeneous as the differences in network technology, hardware architecture, OS, programming languages and geographical locations etc. is not to be taken care of by developers \cite{DDS-slides} \cite[p. 68]{Coulouris}.
 \\
-To support the different programming languages used in the applications, the middleware supports the Interface Definition Language (IDL). It is a standard language for defining the interfaces which enables communication between applications that do not share programming language. This means that each application transform the programming langauge into IDL and transfer it into the middleware and the middleware then transform it to the given target's applications programmering langauge. \cite{DDS-slides} \cite{RTI} \cite{wiki-idl}.
+To support the different programming languages used in the applications, the middleware supports the Interface Definition Language (IDL). 
+It is a standard language for defining the interfaces which enables communication between applications that do not share programming language. 
+This means that each application transform the programming language into IDL and transfer it into the middleware and the middleware then transform it to the given target's applications programming language. \cite{DDS-slides} \cite{RTI} \cite{wiki-idl}.
 \\
-Middleware is useful when developing large and complex distributed systems as it connects the different parts with a "pipe" that makes data-sharing and communication efficient \cite{DDS-slides} \cite[p. 68]{Coulouris}. It should be considered that the middleware-software should be installed on all the involved computers, which can raise the CPU load. Depending on the type of hardware that is used the developers should choose a sufficient middleware \cite{DDS-slides}.
+Middleware is useful when developing large and complex distributed systems as it connects the different parts with a "pipe" that makes data-sharing and communication efficient \cite{DDS-slides} \cite[p. 68]{Coulouris}. 
+Also it is possible to chance the topology of the network as the middleware provides transparency. 
+It should be considered that the middleware-software should be installed on all the involved computers, which can raise the CPU load.
+Depending on the type of hardware that is used the developers should choose a sufficient middleware \cite{DDS-slides}.
 \\
 \\
-When choosing between middlewares it is important to know which standard the different middlewares are using. There is a lot of standards that the middleware can support, e.g. which network the middleware supports or if the middleware supports a medical standard for transferring images and data between devices in the medical industry \cite{DDS_slides}.\\
-There are various implementations of the standards e.g. OpenDDS by Object Computing Inc. which is an open source implementation. Among the commercial implementations Real-Time Innovations (RTI) has developed a middleware called Connext.\\
+When choosing between middlewares it is important to know which standard the different middlewares are using. The middleware implemented by different organizations/companies are categorized into Standard types depending on the focus of the middleware, e.g. the DICOM middleware which implements a medical standard for transferring images and data between devices in the medical industry \cite{DDS-slides}.
 
-Mia - Skal der skrives mere her? Synes Christian sagde noget men har pt glemt det - ved ikke om du går lidt i dybden med det i dit afsnit? Det var noget de forskelilge standarder, mens synes vi går i dybden med det når vi forklare DDS.
-Lasse - nej, jeg synes det er fint som det står :) Men ja, vi mangler at skrive noget om de forskellige standarder og OMG. jeg kommer ikke rigtig ind på standarderne i mit afsnit, så vi skal have flettet det ind et sted... 
 
-A concrete implementation of this middleware in a distributed system is seen below.
+\begin{figure}[htbp]
+\centering
+\includegraphics[scale=0.6]{Standards}
+\caption{An example of middleware standards and their types \cite{DDS-slides}.}
+\label{fig:standards}
+\end{figure}
+
+There are various implementations of these standards e.g. DDS which has the standard-type "Industrial automation and Control". 
+The DDS standard is implemented in the software "OpenDDS" by Object Computing Inc. which is an open source implementation. 
+Among the commercial implementations Real-Time Innovations (RTI) has developed a DDS-standard middleware called Connext.
+
+
+The DDS specification is developed by RTI and Prismtech and is approved as a standard by Object Management Group (OMG) - An international open membership consortium developing middleware standards. They also standardize Unified Modelling Language (UML).
+This example indicates that companies are collaborating with the "standard-approval-organizations" to further develop the standards and make them contemporary \cite{DDS-slides}.
+
+A concrete implementation of this middleware in a distributed system is seen on Figure \ref{fig:impl}.
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.4]{Figure/MiddelwareImplementation.png}
+\includegraphics[scale=0.4]{MiddelwareImplementation}
 \caption{Connext in a distributed system}
+\label{fig:impl}
 \end{figure}
 
 The figure shows, that a C++ application on Machine 3 is transferring data to the middleware. The middleware then handle and transform it, so it can be used on Machine 2, even if the programming languages and the machines are different from each other. 
 \\
-The communication in the middleware is performed by a publish-subscriber paradigm, called Data-Centric publish-subscribe, which is explained in details in the next section. Other forms of middelware communication paradigms is e.g. Message Passing, Message queuing, Remote procedure call and derivatives and etc.\cite{DDS-slides}.\\
-These communication paradigms in middleware, decouples data producers and consumers in different ways and can be categorized into three different decouplings; space, time and flow decoupling.\\
+The communication in the middleware is performed by a publish-subscriber paradigm, called Data-Centric publish-subscribe, which is explained in details in the next section. Other forms of middelware communication paradigms is e.g. Message Passing, Message queuing, Remote procedure call and derivatives and etc.\cite{DDS-slides}.
+\\
+These communication paradigms in middleware, decouples data producers and consumers in different ways and can be categorized into three different decouplings; space, time and flow decoupling.
+\\
 Space decoupling is if the producers and the consumers do not know each other, which means that they do not have a reference to each other and do not know the location of each other.
 \\
-Time decoupling is if the interaction is asynchronous which means that the data being passed can be used later and not only when it is received. An example on an asynchronous communication could be a mail client which receives mails, but the mails can be read at a later time than when it arrived. A synchronous communication could be a phone call where it is only possible to talk if the recipient is answering the call. \\
-Flow decoupling is if the data production and consumption are not blocking the flow for the producer or the consumer. This means that the producer and the consumer do not block each other when they use the data being passed between them.\\
+Time decoupling is if the interaction is asynchronous which means that the data being passed can be used later and not only when it is received. 
+An example on an asynchronous communication could be a mail client which receives mails, but the mails can be read at a later time than when it arrived. 
+A synchronous communication could be a phone call where it is only possible to talk if the recipient is answering the call. 
+\\
+Flow decoupling is if the data production and consumption are not blocking the flow for the producer or the consumer. 
+This means that the producer and the consumer do not block each other when they use the data being passed between them.
 
 \section{Data distribution service for real-time systems}
-The DDS is a specification standard, approved by the Object Management Group (OMG), that facilitates data-communication through the data-centric publish/subscribe paradigm \cite{RTI}. The DDS standard supports deterministic data-delivery (if the underlying data-link and physical layer supports it), a large number of configuration parameters and a low overhead on memory and CPU \cite{DDS-slides}.\\
+The DDS is a specification standard, approved by the Object Management Group (OMG), that facilitates data-communication through the data-centric publish/subscribe paradigm \cite{RTI}. 
+The DDS standard supports deterministic data-delivery (if the underlying data-link and physical layer supports it), a large number of configuration parameters and a low overhead on memory and CPU \cite{DDS-slides}.
+\\
 The specification for DDS consists of two distinct sections; Data Logical Reconstruction Layer (DLRL) and Data-Centric Publish-Subscribe (DCPS) \cite{DDS-slides}.
-
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.8]{Figure/DLRLandDCPS.png}
+\includegraphics[scale=0.8]{DLRLandDCPS}
 \caption{The two sections in the DDS specification \cite{DDS-slides}}
 \label{Fig:DLRL}
 \end{figure}
@@ -61,7 +92,7 @@ The DCPS is the lower layer which the application uses to communicate with other
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.8]{Figure/DDSentities.png}
+\includegraphics[scale=0.8]{DDSentities}
 \caption{The DDS/DCPS entities \cite{RTI}}
 \label{Fig:Entities}
 \end{figure}
@@ -73,47 +104,92 @@ The DCPS is the lower layer which the application uses to communicate with other
   \item \textbf{Publisher}\\The publisher is a container to group individual Data Writers; it can have many Data Writers. The publisher can also be configured with Quality of Service (QoS) parameters and can apply these parameters to all the Data Writers it contains. Furthermore the publisher is responsible for defining the topics to which subscribers can subscribe.
   \item \textbf{Data Reader}\\The Data Reader is the primary point to access data that has been received by a Subscriber. The Data Reader can read data from Data Writers if the data has the same type; the reader has a single Topic.
   \item \textbf{Subscriber}\\As for the Publisher the Subscriber is a container that groups the Data Readers; it can have many Data Reader. When data is available the Subscriber can notify the application in one of three ways:
+  
   \begin{itemize}
   \item Listener Callback Routine which makes DDS run our own specific software to access data as soon as it arrives.
+
   \item Polling the Data Reader to check if data is available.
+
   \item Conditions and WaitSets where the application access the data from the Data Reader when specified conditions are met.
   \end{itemize}
-  When the data has been received it can be accessed by "take()" which removes data or by "read()" which allows data to be used multiple times.
-  \item \textbf{Topic}\\Topics are information about a single data type. The Topic of a given publisher on one computer must match the Topic of an associated subscriber - otherwise communication will not take place. A topic consists of a Topic Name (a string that uniquely identifies the Topic within the domain) and a Topic Type (the definition of the data contained within the Topic). Within the definition of the Topic Type one or more data can be chosen to be a Key. They are used by the DDS middleware to sort incoming data and provide scalability as the Key can be used to identify the data-source instead of using the Topic Name as an identifier. When Keys are used only one Topic is needed. As an example of the use of Keys refers to the Prototype-section. KEYS ARE USED IN OUR PROTOTYPE??
-  \\\cite{RTI} \cite{opendds} \cite{DDS-slides}
+
+When the data has been received it can be accessed by \code{take()} which removes data or by \code{read()} which allows data to be used multiple times.
+
+  \item \textbf{Topic}
+  \\
+  Topics are information about a single data type. 
+  The Topic of a given publisher on one computer must match the Topic of an associated subscriber - otherwise communication will not take place. 
+  A Topic consists of a Topic Name (a string that uniquely identifies the Topic within the domain) and a Topic Type (the definition of the data contained within the Topic). 
+  Within the definition of the Topic Type one or more data can be chosen to be a Key. 
+  They are used by the DDS middleware to sort incoming data and provide scalability as the Key can be used to identify the data-source instead of using the Topic Name as an identifier. 
+  When Keys are used only one Topic is needed \cite{RTI} \cite{opendds} \cite{DDS-slides}. 
+  As an example of the use of Keys refers to the Prototype-section where the address of the accident is chosen as key. 
+  This enables the subscriber to sort the data regarding to accident-address.
 \end{itemize}
 
-The figure below shows another conceptual view on publication, subscription and topic: 
+Figure \ref{fig:pubSub} shows another conceptual view on publication, subscription and topic. 
 
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.7]{Figure/PublicationAndSubscription.png}
-\caption{A simple conceptual view of publication and subscription \cite{ddsopen}}
+\includegraphics[scale=0.7]{PublicationAndSubscription}
+\caption{A simple conceptual view of publication and subscription \cite{opendds}}
+\label{fig:pubSub}
 \end{figure}
 
-\textbf{Sending and receiving data}\\The application on the publishing side initiates the flow of data by writing a data value to the Data Writer. The Data Writer's publisher publishes the data. The publisher sends the data to the associated subscription(s). Each associated Subscriber gives the received data to the Data Reader(s) that are associated with the sending Data Writer; they have the same Topic. Afterwards the application on the subscribing side retrieves the data from the Data Reader.\\
+\textbf{Sending and receiving data}
 \\
-\textbf{Quality of Service}\\The QoS parameters specify the data flow; the rate of publications and subscriptions, for how long data is valid ect. DDS provides QoS parameters on each of the above-mentioned entities which enables custom tailored communication as the developer can construct complex data communication patterns. This is the essence of data centricity within DDS \cite{RTI} \cite{DDS-slides}.
+The application on the publishing side initiates the flow of data by writing a data value to the Data Writer. 
+The Data Writer's publisher publishes the data. 
+The publisher sends the data to the associated subscription(s). 
+Each associated Subscriber gives the received data to the Data Reader(s) that are associated with the sending Data Writer; they have the same Topic. 
+Afterwards the application on the subscribing side retrieves the data from the Data Reader.
 \\
 \\
-\textbf{The Shapes Demo}\\Various DDS vendors participate in an interoperability demonstration each spring at the Object Management Group (OMG) Spring Technical Meeting. During the demo, each vendor publishes and subscribes to each others topics using a test suite called the Shapes Demo \cite{wiki-DDS}. This leads to a quality check of the DDS standard as all the different implementations should be able to communicate if the standard has been followed.\\The screen-shots below shows the Shapes Demo. Notice that the publisher (left) and the subscriber (right) need to be in the same Domain on order to communicate.
+\textbf{Quality of Service}
 \\
+The QoS parameters specify the data flow; the rate of publications and subscriptions, for how long data is valid ect. 
+DDS provides QoS parameters on each of the above-mentioned entities which enables custom tailored communication as the developer can construct complex data communication patterns. 
+This is the essence of data centricity within DDS \cite{RTI} \cite{DDS-slides}.
+\\
+\\
+\textbf{The Shapes Demo}
+\\
+Various DDS vendors participate in an interoperability demonstration each spring at the Object Management Group (OMG) Spring Technical Meeting. 
+During the demo, each vendor publishes and subscribes to each others topics using a test suite called the Shapes Demo \cite{wiki-DDS}. 
+This leads to a quality check of the DDS standard as all the different implementations should be able to communicate if the standard has been followed.
+\\
+The screen-shots on Figure \ref{fig:sd3}, \ref{fig:sdhold} and \ref{fig:sdwContent} shows the Shapes Demo. 
+Notice that the publisher (left) and the subscriber (right) need to be in the same Domain on order to communicate.
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{Figure/SD3.png}
+\includegraphics[scale=0.5]{SD3}
 \caption{The publisher on the left is publishing data with the Topic Name "Circle" and the Topic Type "Green". The subscriber on the right is receiving the data as it subscribes to the same Topic.}
+\label{fig:sd3}
 \end{figure}
-\vspace{10 pt}
+
+
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{Figure/SDhold.png}
+\includegraphics[scale=0.5]{SDhold.png}
 \caption{With the mouse it is possible to change the speed and the orientation of the circle and this behavior is mirrored in the subscriber on the right}
+\label{fig:sdhold}
 \end{figure}
-\vspace{10 pt}
+
+
+
 \begin{figure}[H]
 \centering
-\includegraphics[scale=0.5]{Figure/SDwContentAndTimeFiltering.png}
-\caption{The subscriber on the right is using two QoS parameters; it only wants data every 1000 milliseconds; the red triangle is only mirrored once every second, and content-filtering; the subscriber only wants data that matches the shaded area. If the cyan-coloured data is outside the content-filter then the Data Reader will not read the data, and nothing is being provided to the application}
+\includegraphics[scale=0.5]{SDwContentAndTimeFiltering.png}
+\caption{The subscriber on the right is using two QoS parameters; 
+it only wants data every 1000 milliseconds; 
+the red triangle is only mirrored once every second, and content-filtering; 
+the subscriber only wants data that matches the shaded area. 
+If the cyan-coloured data is outside the content-filter then the Data Reader will not read the data, and nothing is being provided to the application}
+\label{fig:sdwContent}
 \end{figure}
-\vspace{10 pt}
+
+
+
 \end{document} 
