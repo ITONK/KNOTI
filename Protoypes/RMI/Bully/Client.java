@@ -66,6 +66,10 @@ public class Client implements Bully {
 		candidates.add(host);
 	}
 
+	public void DoTask() {
+		
+	}
+
     public static void main(String[] args) {
 
 	String host = (args.length < 1) ? null : args[0];
