@@ -5,7 +5,7 @@
 This chapter will cover the fundamentals in the distributed object-based system Java Remote Method Invocation (RMI) and how a leader of the distributed collaboration is elected.
 
 \section{JAVA RMI}
-Java Remote Method Invocation (RMI) is a middleware that supports Java-to-Java only. RMI gives a client on one Java Virtual Machine (JVM) access to objects that runs on another JMV which allows the client to invoke methods on the object - called the Remote Object. Thus providing remote communication between programs written in Java \cite{RMI-slides}. A JVM is a program that provides a run-time environment where applications written in Java binary code (called bytecode) can be executed. The JVM contains a set of instructions which is used when interpreting a Java bytecode enable the processor to execute a compiled Java program. The JVM will subsequently handle the actual execution of the program by interpreting each of its instructions, enabling automatic exception handling \cite[p. 422-423]{Tanenbaum}, \cite{wiki-jvm}.\\The remote object is a distributed object whose state always resides on one single JVM but whose interface can be made available to processes on another JVM \cite[p. 461]{Tanenbaum}.
+Java Remote Method Invocation (RMI) is a middleware that supports Java-to-Java only. RMI gives a client on one Java Virtual Machine (JVM) access to objects that runs on another JMV which allows the client to invoke methods on the object - called the Remote Object. Thus providing remote communication between programs written in Java \cite{RMI-slides}. A JVM is a program that provides a run-time environment where applications written in Java binary code (called bytecode) can be executed. The JVM contains a set of instructions which is used when interpreting Java bytecode and this enable the processor to execute a compiled Java program. The JVM will subsequently handle the actual execution of the program by interpreting each of its instructions, enabling automatic exception handling \cite[p. 422-423]{Tanenbaum}, \cite{wiki-jvm}.\\The remote object is a distributed object whose state always resides on one single JVM but whose interface can be made available to processes on another JVM \cite[p. 461]{Tanenbaum}.
 
 \begin{figure}[H]
 \centering
@@ -59,10 +59,10 @@ When developing distributed systems there is multiple nodes(PC's) where there is
 \item When a leader fails
 \item When a leader retires on purpose
 \end{itemize}
-To choose the leader, the network nodes communicate among themselves in order to decide which of them get the leader state. In order to archieve this, the different processes have to be unique and to have comparable identies, so they can compare between each other. When comparing, the leader node is the one with the highest identity/process number. \cite{wiki-Leader}. A simple example with one process per machine, the identity could be the mac adress of each machine.\cite{ElectionAlgorithm}
+To choose the leader, the network nodes communicate among themselves in order to decide which of them get the leader state. In order to archieve this, the different processes have to be unique and have comparable identies, so they can compare between each other. When comparing, the leader node is the one with the highest identity/process number. \cite{wiki-Leader}. A simple example with one process per machine, the identity could be the mac adress of each machine.\cite{ElectionAlgorithm}
 To locate the process with the highest number there is different leader election algoritms which will be explained in a later section. \\
 
-When using leader election algorithms, everytime there is a election it cost on the hardware front, e.g. CPU, RAM, bandwith, battery, etc.\cite{RMI-slides} This can in worst case result in overload and a given process could fail e.g. due to hardware failure. The given process could be the leader and the algoritm would then take care of electing a new leader instead of the broken/failed process. This minimize the computational burden when using leader election. Furthermore it also take care of the others process can go on with a new leader and that they would work without the broken process, since there still is a leader which all processes can interact with.  \\
+When using leader election algorithms, there is a cost on the hardware front, e.g. CPU, RAM, bandwith, battery, etc, when handling elections.\cite{RMI-slides} This can in worst case result in overload and a given process could fail e.g. due to hardware failure. The given process could be the leader and the algoritm would then take care of electing a new leader instead of the broken/failed process. This minimize the computational burden when using leader election. Furthermore it also take care of the others process can go on with a new leader and that they would work without the broken process, since there still is a leader which all processes can interact with.  \\
 
 An example of a concrete leader election algorithm, could be the Bully election algorithm. Its mode of operation is when a given process notices that the leader/coordinator is no longer responding to requests and a given process then initiates an election. A process, P,  holds an election the following way
 \begin{enumerate}
@@ -93,7 +93,16 @@ If process 7 will run again, it will send all the other running a COORDINATOR me
 
 Another example of an algorithm, could be The Chang and Roberts algorithm, which is a ring-based coordinator election algorithm. The algorithm assumes that each process have a UID(Unique Identification) and that the processes can arrange themselves in a unidirectional ring with a communication channel going from each process to the clockweise neighbour.
 
-When there is an election the given process sends its own ID(UID) as the ELECTION message, and passes it along. When a node recieves an id, it passes it along if its own ID is less than the id it received. When a node receives its own id, it set itself to be the leader. \cite{wiki-RingAlgorithm}
+\begin{figure}[hbtp]
+\centering
+\includegraphics[scale=0.30]{Figurer/ChangAndRobertsRingAlgorithm.png}
+\caption{Ring Algorithm}
+\end{figure}
+
+When starting, each process in the ring is marked as non-participant.
+When there is an election the given process sends its own ID(UID) as the ELECTION message, and passes it along to the next process and when this happen the process also mark it self as participant. 
+When the next process recieves this ELECTION message, it compares the UID in the message with it's own UID. If the UID is smaller, the process discard the election message. If it is larger and the process is participant, the process discard the election message (i.e. the process have already sent out a message with a UID higher than its own). If its not a participant, the process replaces the UID in the message with its own and send the updated election message to the next process. 
+When the UID in the incoming message is the same as the UID of the process, that process start acting a leader. \cite{wiki-RingAlgorithm}
 
 
 \end{document}  
