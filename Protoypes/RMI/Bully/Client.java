@@ -12,7 +12,7 @@ public class Client implements Bully {
 	}
 
 	public String IdName;
-	private List<Client> candidates;
+	private Client leader;
 
 	public void StartElection() {
 		//Find everyone greater
@@ -29,7 +29,7 @@ public class Client implements Bully {
 			{
 				Registry registry = LocateRegistry.getRegistry(client);
 				Bully stub = (Bully) registry.lookup(client.IdName); //Find one to elect
-				String response = stub.ElectionBully(this); //Are you there?
+				String response = stub.StartElection(); //Are you there?
 			} 
 			catch (Exception e) 
 			{
@@ -46,29 +46,11 @@ public class Client implements Bully {
 		}
 	}
 
-	public void ElectionBully(Client host) {
-		try 
-		{
-			Registry registry = LocateRegistry.getRegistry(host);
-			Bully stub = (Bully) registry.lookup(client.IdName); //Find the one electing
-			String response = stub.Response(this.IdName); //I am greater
-		} 
-		catch (Exception e) 
-		{
-			System.err.println("Client exception: " + e.toString());
-			e.printStackTrace();
-		}
-
-		StartElection();
+	public void DoTask() {
+		
 	}
 
-	public void Respose(Client host) {
-		candidates.add(host);
+	public void Announce(Client host) {
+		leader = host.IdName;
 	}
-
-    public static void main(String[] args) {
-
-	String host = (args.length < 1) ? null : args[0];
-		//Something must be running down here...
-    }
 }
