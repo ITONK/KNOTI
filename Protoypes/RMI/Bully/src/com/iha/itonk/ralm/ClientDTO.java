@@ -1,12 +1,14 @@
 package com.iha.itonk.ralm;
 
-public class ClientDTO {
-	public ClientDTO(String host, int port)
+public class ClientDTO implements java.io.Serializable {
+	public ClientDTO(String host, int port, String name)
 	{
 		this.host = host;
 		this.port = port;
+		this.name = name;
 	}
 	
+	public String name;
 	public String host;
 	public int port;
 	
@@ -16,7 +18,7 @@ public class ClientDTO {
 			return false;
 		} else {
 			ClientDTO o = (ClientDTO) other;
-			return o.host.equals(this.host) && o.port == this.port;
+			return o.host.equals(this.host) && o.port == this.port && o.name.equals(this.name);
 		}
 	}
 }
