@@ -19,6 +19,7 @@ public class Client implements Bully {
     public Client(ClientDTO clientDTO, ArrayList<ClientDTO> clients) {
     	clientInfo = clientDTO;
     	splitList(clientDTO, clients);
+    	System.out.println("Running with host "+System.getProperty("java.rmi.server.hostname"));
 	}
 
 	private void splitList(ClientDTO client_this, ArrayList<ClientDTO> clients) {

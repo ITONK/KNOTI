@@ -20,7 +20,7 @@ public class Main {
 	
 		try {
 			int port = Integer.parseInt(args[0]);
-			String IP = InetAddress.getLocalHost().getHostAddress();
+			String IP = System.getProperty("java.rmi.server.hostname"); //InetAddress.getLocalHost().getHostAddress();
 			String name = args[2];
 			String task = (args.length > 3 ? args[3] : "Stay still");
 			
