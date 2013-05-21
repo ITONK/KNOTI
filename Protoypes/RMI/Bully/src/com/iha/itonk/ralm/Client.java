@@ -2,22 +2,23 @@ package com.iha.itonk.ralm;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.rmi.ConnectException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-@SuppressWarnings("serial")
-public class Client extends ClientDTO implements Bully {
+public class Client implements Bully {
 	
 	private List<ClientDTO> higherThanMe = new ArrayList<ClientDTO>(), lowerThanMe = new ArrayList<ClientDTO>();
 	private ClientDTO leader;
+	private ClientDTO clientInfo;
 
     public Client(ClientDTO clientDTO, ArrayList<ClientDTO> clients) {
-    	super(clientDTO.host, clientDTO.port, clientDTO.name);
+    	clientInfo = clientDTO;
     	splitList(clientDTO, clients);
-    	StartElection(); // TODO: Find leader in better way...
 	}
 
 	private void splitList(ClientDTO client_this, ArrayList<ClientDTO> clients) {
@@ -53,73 +54,79 @@ public class Client extends ClientDTO implements Bully {
 			{
 				System.out.println("Someone is higher than me");
 				Registry registry = LocateRegistry.getRegistry(client.host, client.port);
-				Bully stub = (Bully) registry.lookup(client.name); //Find one to elect
+				Bully stub = (Bully) registry.lookup("Bully"); //Find one to elect
 				stub.StartElection(); //Are you there?
 				foundHigher = true; // If no exception was thrown
 			} 
-			catch (Exception e) 
+			catch (ConnectException ce)
 			{
-				System.err.println("Client exception: " + e.toString());
+				System.out.println("Could not connect to " + client.name + ". " +
+						"Assuming it's not running");
+			}
+			catch(Exception e)
+			{
+				System.err.println("ERROR while connecting to " + client.name + "!");
+				e.printStackTrace();
 			}
 		}
 		
 		if(!foundHigher)
 		{
 			System.out.println("Noone higher than me. I should be leader");
+			leader = clientInfo;
 			// Announce that I'm the leader now!
 			for(ClientDTO client : lowerThanMe) {
 				try 
 				{
 					Registry registry = LocateRegistry.getRegistry(client.host, client.port);
-					Bully stub = (Bully) registry.lookup(client.name); //Find one to elect
-					stub.Announce(this); //Are you there?
+					Bully stub = (Bully) registry.lookup("Bully"); //Find one to elect
+					stub.Announce(clientInfo); 
 				}
-				catch (Exception e) 
+				catch (ConnectException e) 
 				{
-					System.out.println("Stub is bad");
-					e.printStackTrace(); // First will fail here
+					System.out.println("Can't connect to " + client.name + ". It just misses the announcement.");
+				}
+				catch(Exception e)
+				{
+					System.err.println("ERROR while connecting/announcing to "+client.name);
+					e.printStackTrace();					
 				}
 			}
 			if(lowerThanMe.size() == 0)
 			{
 				System.out.println("I am last client and leader");
-				leader = this.leader;
 			}
 		}
 	}
 
 	public String DoTask() {
-		return "Go right";
+		return clientInfo.task;
 	}
 	
 	public void RunTask() {
 		try {
-			if(leader == null)
+			if(leader == null || leader == clientInfo)
 			{
 				return;
 			}
 				
 			Registry registry = LocateRegistry.getRegistry(leader.host, leader.port);
-			String name = leader.name;
-			Bully leader = (Bully) registry.lookup(name);
-			String task = leader.DoTask();
-			System.out.println("Leader told us to: " + task);
+			Bully leaderBully = (Bully) registry.lookup("Bully");
+			String task = leaderBully.DoTask();
+			System.out.println("Leader (" + leader.name + ") told us to: " + task);
 		} 
 		catch (RemoteException e) {
-			//TODO: Some logging of exception
-			System.out.println("Starting election");
+			System.out.println("Can't find leader! Will start an election");
 			StartElection();
 		} 
-		catch (NotBoundException e) {
-			// TODO Auto-generated catch block
-			// If we're here, the programmer did something baaaad...
-			System.out.println("Something went wrong during RunTask()");
+		catch (Exception e) {
+			System.err.println("ERROR while running RunTask()");
 			e.printStackTrace();
 		}
 		
 	}
 
 	public void Announce(ClientDTO newLeader) {
-		this.leader = newLeader;
+		leader = newLeader;
 	}
 }

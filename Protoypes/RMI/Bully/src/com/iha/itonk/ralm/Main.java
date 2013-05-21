@@ -22,18 +22,18 @@ public class Main {
 			int port = Integer.parseInt(args[0]);
 			String IP = InetAddress.getLocalHost().getHostAddress();
 			String name = args[2];
+			String task = (args.length > 3 ? args[3] : "Stay still");
 			
 			Registry registry = LocateRegistry.createRegistry(port);
 			
 			System.out.println("IP host: "+IP + ", port: " + port + " , name: " + name);
 			
-			
 			ClientDTO client_this = new ClientDTO(IP, port, name);
+			client_this.task = task;
 			
-			//Find everyone greater
 			ArrayList<ClientDTO> clients = new ArrayList<ClientDTO>();
 			//Read from file
-			List<String> clientStrs = Files.readAllLines(Paths.get("/home/limro/clients.txt"), Charset.defaultCharset());
+			List<String> clientStrs = Files.readAllLines(Paths.get("clients.txt"), Charset.defaultCharset());
 	
 			if(clientStrs.size() < 1)
 				System.err.println("Add more clients! One is not enough");
@@ -50,9 +50,11 @@ public class Main {
 
 			Client client = new Client(client_this, clients);
 			Bully stub = (Bully) UnicastRemoteObject.exportObject(client, 0);
-		    
-			registry.rebind(name, stub); //Bind the remote object's stub in the registry
+			
+			registry.rebind("Bully", stub); //Bind the remote object's stub in the registry
 
+			client.StartElection(); // TODO: Find leader in better way...
+			
 			while(true) {
 				client.RunTask();
 				Thread.sleep(1000);
