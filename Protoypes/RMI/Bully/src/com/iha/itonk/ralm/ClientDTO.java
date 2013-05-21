@@ -1,5 +1,7 @@
 package com.iha.itonk.ralm;
 
+import java.rmi.Remote;
+
 public class ClientDTO implements java.io.Serializable {
 	public ClientDTO(String host, int port, String name)
 	{
@@ -11,6 +13,7 @@ public class ClientDTO implements java.io.Serializable {
 	public String name;
 	public String host;
 	public int port;
+	public String task;
 	
 	@Override
 	public boolean equals(Object other) {
