@@ -3,8 +3,17 @@
 
 
 \chapter{Introduction}
+The course on object oriented network communication is concerning collaboration between multiple computers in a distributed systems.\\
+When organizing distributed systems the paradigm of distributed objects can be used. This offers transparency in the distribution as services and resources located at the server are treated as objects that clients can invoke. This makes it relatively easy to hide distribution aspects behind the interface of an object \cite[p. 443]{Tanenbaum}. The object orientation paradigm offers the ability to build software into well-defined and somewhat independent components which enable developers to concentrate on functionality in their software independent from other developers. The features of the server-object(s) are made available to clients via method-invocations through an interface \cite[p. 443-444]{Tanenbaum}.
 
-TODO:
-- Introduction to distributed object-based systems --> see book p. 443 and on
+
+This report covers the subject of a specific application used in Java-specific distributed object-based systems; the Java Remote Method Invocation (RMI).
+
+
+Chapter 2 contains a description of the Java RMI application and the election of a leader-node using the \textit{Bully election} and the \textit{The Chang and Roberts algorithm}.
+
+
+Chapter 3 contains a practical example of an implementation of Java RMI with four autonomous processes running on two different nodes. The features of the Bully election is used when selecting a leader-node.
+
 
 \end{document} 
