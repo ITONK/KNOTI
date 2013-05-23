@@ -128,6 +128,7 @@ public class Client implements Bully {
 	}
 
 	public void Announce(ClientDTO newLeader) {
+		System.out.println("Announced new leader: " + newLeader.name);
 		leader = newLeader;
 	}
 }
