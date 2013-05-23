@@ -40,10 +40,10 @@ The registry is used to locate the remote object a client need to use as it prov
 
 \item The \textbf{Transport Layer} handles how the data is transported via the TCP/IP connection through a network. It is responsible for accepting calls on incoming connections, setting up the connection between JVM's and dispatch to the remote reference layer. It contains the following features:
 \begin{itemize}
-\item \textbf{Endpoint} used to denote the addresses to the client and the server; the address space or a JVM
-\item \textbf{Channel} is responsible for managing the connection between the client and the server
-\item \textbf{Connection} is used to transfer the data
-\item \textbf{Transport} Within a transport between a server and a client only one channel exist.
+\item Endpoint used to denote the addresses to the client and the server; the address space or a JVM
+\item Channel is responsible for managing the connection between the client and the server
+\item Connection is used to transfer the data
+\item Transport Within a transport between a server and a client only one channel exist.
 \end{itemize}
 
 \setlength\parindent{300pt}\cite{RMI-slides}
