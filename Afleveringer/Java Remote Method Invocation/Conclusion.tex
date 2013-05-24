@@ -13,6 +13,28 @@ Java RMI can be used in distributed systems where multiple PC's are running mult
 \section{Discussion}
 The Java RMI is simple and easy to use as the application makes services and resources on servers available by offering an interface. This ease the sharing of these services in distributed systems as it offers access to the remote object as if they were local. The underlying network connection is handled by the application, which makes it easy to implement. However it is important to consider that the application only support Java-to-Java collaboration. But if wanted a Java Native Interface can be used to map between software written in another programming language and the RMI on the client space. This enables the use of Java RMI even if the Java programming language is not used. If this is the circumstance it could be feasible to use CORBA instead, which support multiple programming languages. This interface is offering a variety of complicated methods which is not always an advantageous, as a client rarely use all methods. Thus a simple method-invocation can be unnecessarily large to implement\\It is also to be considered that large network-collaborations can experience delays as the remote method invocations are more time consuming than local methods invocations. Furthermore the need of at least two JVMs is also considered to be time consuming. Therefore it is advisable to implement time-out handlers on the clients space. If the server-side fails, then the client would handle the exception when the time has run out.\\Also when using the Bully election a new election can be quite consuming. But the use of a leader is on the same time essential, as the the nodes in the network are collaborating in achieving a common goal. This require a common understanding on how and when the processes can perform a given task, which is supplied by the leader. But even with a leader to coordinate the remote calls may introduce concurrency issues, which should be handled by the client.
 
+\subsection{Optimization of Bully selection}
+It's pretty clear that the bully election pattern in its simpliest form isn't the most optimal. For small system like the one we have implementet there isn't too much of a problem, but if it just slightly scaled there is area where the pattern could be optimized.
+
+A small optimizaion could be to make sure that lower ranked bullies also are noted about an election is going on. In that way they will not also start an election when they notice the leader is down. If they are not noted at first, they will not be noted until a new leader have been chosen, which potentially could take a long time.
+
+\subsubsection{Faster election}
+In the context of election there could be chosen pattern that are much faster both in the election and announcement. Basically there is not need for a bully to ask all higher ranked bullies for an election and later the new leader to announce to all bullies it is the leader. Especially the announcement can be time-consuming if it needs to announce to all bullies wihout knowning if they are up and down.
+
+The solution to  this problem could be to use the force of RMI and spreading out the tasks This could be done by using patterns like (binary) trees and thereby announcing to all via an chain-reaction.
+
+\subsubsection{Dynamic adding}
+All bullies in the prototype need to have a file contain a list of all bullies in order to be able to communicate with them. In the context of a small prototype, this is an okay solution, but if the system needs to be scaled or just more dynamic, a routine of sending a file around before startup isn't the best.
+Instead of all the static handling, bullies could be added dynamically. Only precondition to this is that they know at least one bully in the running system. When a new bully is to be added these four steps could be followed:
+\begin{enumerate}
+\item New bully asks known bully for list of all bullies. If the bully cannot connect to the know, it's just bad luck.
+\item Known bully returns the list of running bullies. 
+\item New bully announces to all that it is now in the system. If it knows that it should be the new leader (because of highest ID) this could be announced in the same message.
+\item Each bully updates their list.
+\end{enumerate}
+For this to work in the best way, this needs to be done by all added bullies, not matter if they have been in the system before or not. If a new bully doesn't (and just assume it knows all bullies), it could announce wrong information and not announce to enough of bullies. 
+One of the main problems of this is however that bullies with an low ID won't by default be removed from the list. If nothing is done about that the system could potentially end up in a situation where the bullies would have a list with a lot of offline bullies and this list also would be distributed to new bullies.
+
 \section{Perspectives}
 The Java RMI application can be used when the Client-Server architecture is wanted, that be the server handling big calculation-tasks or database-communication and the client using these services/resources. Concrete it could be feasible when personal healthcare devices need to deliver healthcare-data to a manager-node which handle the database communication. The data-transfer is handled by Java RMI, which make it easier to implement for the developer, since the focus only have to be on the client-server relationship and e.g. not network transfer. 
 

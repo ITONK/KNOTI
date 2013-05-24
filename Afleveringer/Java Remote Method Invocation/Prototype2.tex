@@ -1,0 +1,84 @@
+\documentclass[Main]{subfiles}
+\begin{document}
+
+
+The prototype is designed with a \code{main} to run each client.
+Upon starting the main there must be provided 4 parameters; the port number, the file listing all clients, a name and a task.
+The four parameters will be read in the main-file to setup the client for the \code{RMIRegistry} which dictates the port used, name of the client and the task to be performed.
+Also a text file with all clients must be given.
+
+Besides the program arguments the program requires VM arguments in the form of system properties, here the IP-address of it self; \code{-Djava.rmi.server.hostname=10.193.2.91}
+
+The \code{main} now creates the registry for the RMI with the port, creates a \code{ClientDTO} with the port, name, and IP and checks the provided text file of clients -- to see if there's anyone to connect to and if its own information is correct.
+When validated a \code{Client} is created and exposed as a \code{RemoteObject}, bounded to the registry and ready for use. 
+Since it does not know who is coordinating the clients it starts an election and starts running it's task.
+
+
+
+A \code{Client} is build on a \code{Bully}-interface, which inherits from a \code{Remote}-class.
+When it is first setup in the \code{main} it will first check to see if there is any leader or it is leader it self.
+If this is not the case it will ask for the leader what to perform.
+In case it can't find the leader it will start an election for a new leader.
+
+
+
+When trying to locate a new leader with the \code{StartElection()}-command it first looks at the list of clients connected. 
+If there is someone higher than itself it will ask them to start an election.
+If such is found the function ends since another will be leader.
+However if none is found a flag is set to indicated that it is the highest coordinator, as seen on \codeTitle \ref{lst:startElection} 
+
+
+\begin{lstlisting}[caption=Client: StartElection(), style=Code-Java, label=lst:startElection]
+for(ClientDTO client : higherThanMe) {
+	try 
+	{
+		Registry registry = LocateRegistry.getRegistry(client.host, client.port);
+		Bully stub = (Bully) registry.lookup("Bully"); //Find one to elect
+		stub.StartElection(); 
+		foundHigher = true; 
+	}
+	...
+}
+\end{lstlisting}
+
+
+Should none be higher that the client it declares it self for coordinator. 
+First it finds everyone beneath it in the list and call \code{Announce(ClientDTO)} for all as shown in \codeTitle \ref{lst:foundHigher}.
+
+
+\begin{lstlisting}[caption=Client: StartElection(), style=Code-Java, label=lst:foundHigher]
+if(!foundHigher)
+{
+	leader = clientInfo;
+
+	for(ClientDTO client : lowerThanMe) {
+		try 
+		{
+			Registry registry = LocateRegistry.getRegistry(client.host, client.port);
+			Bully stub = (Bully) registry.lookup("Bully");
+			stub.Announce(clientInfo); 
+		}
+		catch (ConnectException e) 
+		{
+			System.out.println("Can't connect to " + client.name + ". It just misses the announcement.");
+		}
+	}
+	if(lowerThanMe.size() == 0)
+	{
+		System.out.println("I am last client and leader");
+	}
+}
+\end{lstlisting}
+
+
+Testing the system shows that it works as intended.
+When clients higher than the coordinator comes online the election takes place, when a coordinator disconnects a new takes over and clients beneath the coordinator can come and go as they like without interrupting the whole system.
+Specifying the IP-addresses is in a file all systems must have available is not idea and a solution like the DNS-system would be preferred\cite[p. 4]{OurDnsReport}.
+
+
+However the system is not perfect.
+For example is it not thread safe -- when a coordinator is changed it's set to \code{null}.
+If it's called afterwards it will fail
+
+
+\end{document}
