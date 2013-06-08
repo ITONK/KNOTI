@@ -39,6 +39,9 @@
 *.pdf
 *.bbl
 *.blg
+*.nav
+*.snm
+*.vrb
 
 #Temporary folders
 [Bb]in
