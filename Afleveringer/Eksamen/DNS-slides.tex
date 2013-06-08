@@ -39,8 +39,8 @@
 \usepackage{booktabs}
 
 
-\title{ITONK eksamen}
-\subtitle{DNS}
+\title{ITONK exam}
+\subtitle{Domain Name Servers}
 
 \author % (optional, for multiple authors)
 {Rasmus Bækgaard\inst{1}}
@@ -48,11 +48,11 @@
 \institute%[Universitäten Hier und Dort] % (optional)
 {
   \inst{1}%
-  Information og Kommunikationsteknologi\\
-  Ingeniørhøjskolen i Aarhus
+  Information and Communication Technology\\
+  Aarhus University, School of Engineering
 }
 
-\date{\today}
+\date{June 10. 2013}
 
 \subject{subject\dots}
 
@@ -60,15 +60,13 @@
 
 \begin{document}
 
-	\frame{\titlepage}
+\frame{\titlepage}
 	
-%\AtBeginSection[]
-%{
-	\begin{frame}
-		\frametitle{Table of content}
-		\tableofcontents%[currentsection, currentsubsection]
-	\end{frame}
-%}
+\begin{frame}
+	\frametitle{Table of content}
+	\tableofcontents%[currentsection, currentsubsection]
+\end{frame}
+
 
 \section{The purpose of DNS}
 	\begin{frame}
@@ -96,6 +94,7 @@
 		\centering
 		\includegraphics[scale=0.4]{DNS-hierarki}
 		\end{figure}
+		
 	\end{frame}
 	
 	
@@ -107,7 +106,6 @@
 			\item Iterative name resolution
 			\item[]
 			\item Recursive name resolution
-			%\item Optimal use
 			\end{itemize}
 		
 	\end{frame}
@@ -121,11 +119,9 @@
 		\includegraphics[scale=0.45]{iterativ}
 		\end{figure}
 		
-		
-			\begin{itemize}
-			\item Notice the '\#' at the response
-			\end{itemize}
-		
+		\begin{itemize}
+		\item Notice the '\#' at the response
+		\end{itemize}
 		
 	\end{frame}
 	
@@ -179,7 +175,7 @@
 			\begin{itemize}
 			\item DNS has no security -- as it is.
 			\item Signed zone -- trust anchor.
-			\item Private key (local) encrypts with public key (server)
+			\item Private key (local) de-/encrypts with public key (remote)
 			\end{itemize}
 			
 			\begin{figure}[hbtp]
@@ -188,76 +184,6 @@
 			\end{figure}
 		
 		
-	\end{frame}
-	
-%
-%\section{some content}
-%  \begin{frame}
-%    \frametitle{Architecture}
-%    
-%	\begin{itemize}
-%	\item RMI architecture contains three layers
-%	
-%		\begin{itemize}
-%		\item Sub/Skeleton -- also called proxy layer
-%		
-%			\begin{itemize}
-%			\item Closest to client
-%			\end{itemize}
-%	
-%		\item Remote reference
-%		\item Transport layer
-%		
-%		\end{itemize}
-%	
-%	\end{itemize}
-%
-%  \end{frame}
-%
-%  
-%\subsection{Design}
-%  \begin{frame}
-%    \frametitle{Design}
-%	
-%		\begin{itemize}
-%		\item Remote interface
-%		
-%			\begin{itemize}
-%			\item Clients program to remote interfaces
-%			\end{itemize}
-%		
-%		\item Serialization \\
-%		 Ved kommunikationen skal der serialiseres
-%		\item RMI registry
-%		
-%		\end{itemize}
-%	
-%  \end{frame}
-%
-% 
-% 
-%\section{some content}
-%  \begin{frame}
-%    \frametitle{Architecture}
-%    
-%	\begin{itemize}
-%	\item RMI architecture contains three layers
-%	
-%		\begin{itemize}
-%		\item Sub/Skeleton -- also called proxy layer
-%		
-%			\begin{itemize}
-%			\item Closest to client
-%			\end{itemize}
-%	
-%		\item Remote reference
-%		\item Transport layer
-%		
-%		\end{itemize}
-%	
-%	\end{itemize}
-%
-%  \end{frame}
- 
+	\end{frame} 
  
 \end{document}

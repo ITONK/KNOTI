@@ -113,8 +113,8 @@
 \lstdefinestyle{Code-Java} {language=Java, style=Code}
 
 
-\title{ITONK eksamen}
-\subtitle{RMI}
+\title{ITONK exam}
+\subtitle{Remote Method Invocation}
 
 \author % (optional, for multiple authors)
 {Rasmus Bækgaard\inst{1}}
@@ -122,11 +122,11 @@
 \institute%[Universitäten Hier und Dort] % (optional)
 {
   \inst{1}%
-  Information og Kommunikationsteknologi\\
-  Ingeniørhøjskolen i Aarhus
+  Information and Communication Technology\\
+  Aarhus University, School of Engineering
 }
 
-\date{\today}
+\date{June 10. 2013}
 
 \subject{subject\dots}
 
@@ -167,7 +167,7 @@
 		\frametitle{The three main layers in the RMI architecture}
 		
 		\begin{itemize}
-		\item Stub and Skeleton Layer -- Interface
+		\item Stub and Skeleton Layer -- Proxy layer -- Interface
 		\item Remote Reference Layer -- Serialize and TCP/IP
 		\item Transport Layer
 		\end{itemize}
@@ -234,7 +234,7 @@
 		\begin{itemize}
 		\item Leader / coordinator manages task for clients
 		\item Bully election
-		\item Big-O($N^2$)
+		\item Big-O($n^2$)
 		\item Static list of members
 		\end{itemize}
 		
@@ -252,9 +252,10 @@
 		\begin{itemize}
 		\item Reduce amount of messages
 		\item Know one -- connect to all
-		\item Adding: Big-O($2+3N$)
+		\item Adding: Big-O($2+3n$) = O(n)
 		
 			\begin{itemize}
+			\item Who is leader and who is in the party?
 			\item Add me
 			\item Stop for election
 			\item Elect me
