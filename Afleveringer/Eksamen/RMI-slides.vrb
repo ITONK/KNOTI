@@ -1,0 +1,16 @@
+\frametitle{The remote interface}
+
+\begin{lstlisting}[caption=Remote interface, style=Code-Java]
+public interface Bully extends Remote {
+String DoTask() throws RemoteException;
+void StartElection() throws RemoteException;
+void Announce(ClientDTO newLeader) throws RemoteException;
+}
+\end{lstlisting}
+
+
+\begin{lstlisting}[caption=Call client, style=Code-Java]
+Registry reg = LocateRegistry.getRegistry(client.host, client.port);
+Bully skeleton = (Bully) reg.lookup("Bully1");
+\end{lstlisting}
+

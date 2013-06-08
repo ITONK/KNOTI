@@ -12,7 +12,8 @@ import java.util.List;
 
 public class Client implements Bully {
 	
-	private List<ClientDTO> higherThanMe = new ArrayList<ClientDTO>(), lowerThanMe = new ArrayList<ClientDTO>();
+	private List<ClientDTO> higherThanMe = new ArrayList<ClientDTO>(), 
+											lowerThanMe = new ArrayList<ClientDTO>();
 	private ClientDTO leader;
 	private ClientDTO clientInfo;
 

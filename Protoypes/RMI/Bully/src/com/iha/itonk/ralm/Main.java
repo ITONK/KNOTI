@@ -33,14 +33,17 @@ public class Main {
 			
 			ArrayList<ClientDTO> clients = new ArrayList<ClientDTO>();
 			//Read from file
-			List<String> clientStrs = Files.readAllLines(Paths.get("clients.txt"), Charset.defaultCharset());
+			List<String> clientStrs = Files.readAllLines(Paths.get(args[1]), 
+														Charset.defaultCharset());
 	
 			if(clientStrs.size() < 1)
 				System.err.println("Add more clients! One is not enough");
 			
 			for(String clientStr : clientStrs) {
 				String[] clientInfo = clientStr.split(" ");
-				clients.add(new ClientDTO(clientInfo[0], Integer.parseInt(clientInfo[1]), clientInfo[2]));
+				clients.add(new ClientDTO(clientInfo[0], 
+											Integer.parseInt(clientInfo[1]), 
+											clientInfo[2]));
 			}
 			
 			if(!clients.contains(client_this)) {

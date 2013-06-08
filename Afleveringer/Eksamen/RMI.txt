@@ -1,0 +1,9 @@
+Java kan afvikle JVM (virtual machine)
+RMI tillader en client på computer1 at kalde funktioner på en server på computer2.
+Client -> stub -> RRL -> transfer -> | -> transfor -> RRL -> skeleton -> Server
+
+Server har implementation af Remote-interface og kobler sig på Registry
+
+Client spørger Registry om serveren og får interfacet for den
+
+Kan koordinere et større stykke arbejde imellem flere computere (BitCoin mining?)

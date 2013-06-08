@@ -1,0 +1,17 @@
+Levels: 
+- Root
+- tld (top level domain)
+- domain
+
+
+Name resolution:
+- Nævn, at '#' betyder hvad den får + det man stadig mangler (Det er en IP der returneres)
+
+DNSSEC:
+- Nævn Man-In-The-Middle angreb
+
+
+BIND:
+- Crossplatform
+- Kan forbedre tiden på kald til serveren med nogle ms
+- Bruges, hvor man skal administrere og filtrere mange computere til nettet.
