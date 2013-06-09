@@ -1,5 +1,14 @@
 \documentclass{beamer}
 
+\defbeamertemplate{footline}{centered page number}
+{%
+  \hspace*{\fill}%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertpagenumber\,/\,\insertpresentationendpage%
+  \hspace*{\fill}\vskip2pt%
+}
+\setbeamertemplate{footline}[centered page number]
 
 %----------------------- Preamble ----------------
 

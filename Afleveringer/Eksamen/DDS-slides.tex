@@ -38,9 +38,19 @@
 \usepackage{multicol} 
 \usepackage{booktabs}
 
+\defbeamertemplate{footline}{centered page number}
+{%
+  \hspace*{\fill}%
+  \usebeamercolor[fg]{page number in head/foot}%
+  \usebeamerfont{page number in head/foot}%
+  \insertpagenumber\,/\,\insertpresentationendpage%
+  \hspace*{\fill}\vskip2pt%
+}
+\setbeamertemplate{footline}[centered page number]
+
 
 \title{ITONK exam}
-\subtitle{Data Distributed System}
+\subtitle{Data Distributed System Real-time Systems}
 
 \author % (optional, for multiple authors)
 {Rasmus Bækgaard\inst{1}}
