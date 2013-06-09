@@ -41,6 +41,7 @@
 *.blg
 *.nav
 *.snm
+*.dvi
 *.vrb
 
 #Temporary folders
